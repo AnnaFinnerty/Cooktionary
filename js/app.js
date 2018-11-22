@@ -1,0 +1,190 @@
+function App(){
+    console.log("App Running!");
+    
+    var isMobile = this.detectMobile();
+    this.adManager = new AdManager();
+    this.actuator = new Actuator(isMobile);
+    this.inputManager = new InputManager();
+    this.searchManager = new SearchManager();
+    this.storageManager = new StorageManager(this.goBack.bind(this));
+    
+    
+    this.lastPage = "clean-search";
+    this.display_language = "english";
+    
+    this.awake();
+}
+
+App.prototype.awake = function(){
+     
+    this.actuator.on("change-page",this.changePage.bind(this));
+    this.actuator.on("update-text",this.updateSearchText.bind(this));
+    this.actuator.on("update-search",this.updateSearchParameter.bind(this));
+    this.actuator.on("run-search",this.runSearch.bind(this));
+    this.actuator.on("update-browse",this.updateBrowse.bind(this));
+    this.actuator.on("show-random",this.showRandom.bind(this));
+    this.actuator.on("show-full",this.showFull.bind(this));
+    this.actuator.on("go-back",this.goBack.bind(this));
+    this.actuator.on("register",this.registerAd.bind(this));
+    
+    this.inputManager.on("enter",this.runSearch.bind(this));
+    
+    this.loadScreen();
+}
+
+App.prototype.actuate = function(page,data){
+    this.actuator.actuate(page,data);
+    this.updateHistory(page,data);
+}
+
+App.prototype.updateHistory = function(page,data){
+    var id;
+    switch(page){
+        case "full":
+            id = data.id;
+            break;
+            
+        case "browse":
+            id = this.searchManager.browsingBy;
+            break;
+            
+        default:
+            id = null;
+            break;
+    }
+    this.storageManager.updateHistory(page,id);
+}
+
+App.prototype.goBack = function(page,data){
+    console.log("Go back!")
+    console.log(page);
+    console.log(data);
+    if(page == "back-button"){
+        var lastPage = this.storageManager.getLastPage();
+        console.log(lastPage);
+        page = lastPage[0];
+        data = lastPage[1];
+        this.changePage(page,data);
+    }
+    if(page == "full"){
+        this.showFull(data);
+    }
+   
+}
+
+App.prototype.changePage = function(page,data){
+    console.log("Changing page!");
+    console.log(page);
+    if(page === "clean-search"){
+        this.actuate("clean-search",[this.searchManager.searchBy, this.searchManager.searchByOptions,this.storageManager.incentives]);
+        //this.loadScreen();
+    } else if (page == "browse") {
+        this.actuate(page,this.searchManager.browse());
+    } else {
+        this.actuate(page,data);
+    }  
+}
+
+App.prototype.newchangePage = function(page,data){
+    console.log("New Changing page!");
+    console.log(page);
+    console.log(data);
+    switch(page){
+        case "show-full":
+            var record = this.searchManager.findSingleRecord(data);
+            this.actuate("full",record);
+            break;
+            
+        case "browse":
+            this.actuate(page,this.searchManager.browse());
+            break;
+            
+        case "clean-search":
+            this.loadScreen();
+            break;
+            
+        case "run-search":
+            if(data){
+                this.updateSearchText(data);
+            }
+            this.runSearch();
+            break;
+            
+        default:
+            this.actuate(page,data);
+            break;
+    }
+    
+}
+
+App.prototype.loadScreen = function(){
+    var data = {
+        searchBy: this.searchManager.searchBy,
+        searchOptions: this.searchManager.searchByOptions,
+        recent: this.storageManager.recent
+    }
+    this.actuate("clean-search",[this.searchManager.searchBy, this.searchManager.searchByOptions,this.storageManager.incentives]);
+}
+
+App.prototype.runSearch = function(){
+    console.log("running search!");
+    
+    var self = this;
+    var promise = new Promise(function(resolve, reject) {
+      var results = self.searchManager.search();    
+      resolve(results);
+    });
+
+    promise.then(function(results) {
+      self.changePage("results",results);
+    })
+}
+
+App.prototype.updateBrowse = function(newSetting){
+    this.searchManager.updateBrowseSettings(newSetting);
+    this.changePage("browse");
+}
+
+App.prototype.showFull = function(request){
+    //another promise should be added here when running from actual database
+    var record = this.searchManager.findSingleRecord(request);
+    this.changePage("full",record);
+}
+
+App.prototype.showRandom = function(){
+    //another promise should be added here when running from actual database
+    var record = this.searchManager.showRandom();
+    this.changePage("full",record);
+}
+
+App.prototype.updateSearchParameter = function(searchData){
+    console.log("updating search!");
+}
+
+App.prototype.detectMobile = function(){
+    if(window.innerWidth < 500){
+        console.log("Mobile sizing detected!");
+        return true
+    } else {
+        return false
+    }
+}
+
+App.prototype.updateSearchText = function(newText){
+    console.log("updating search text!");
+    this.searchManager.updateSearchText(newText);
+}
+
+App.prototype.registerAd = function(newAd){
+    this.adManager.registerAd(newAd);
+}
+
+/*
+App.prototype.handleSearch = function(action,searchData){
+    console.log("handling search!");
+    console.log(action);
+    console.log(searchData);
+    this.searchManager.search(searchData);
+}
+*/
+
