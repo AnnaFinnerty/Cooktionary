@@ -86,6 +86,7 @@ App.prototype.changePage = function(page,data){
 }
 
 App.prototype.newchangePage = function(page,data){
+    console.log("test!");
     console.log("New Changing page!");
     console.log(page);
     console.log(data);
