@@ -1,12 +1,20 @@
-function Actuator(isMobile){
+function Actuator(data){
     console.log("Actuator running!");
     
-    this.build = new Build(this.emit.bind(this),isMobile);
+    this.build = new Build(this.emit.bind(this),data.isMobile);
     
     this.content = document.querySelector('.content');
     this.showing = "big-search";
     this.result_type = "expanded";
-    this.language = "english";
+    this.language = data.language;
+    this.collections = data.collections;
+    this.searchCriteria = data.searchCriteria;
+    this.searchByOptions = data.searchByOptions;
+    this.browseCategories = data.browseCategories;
+    this.searchingBy = data.searchingBy;
+    this.browsingBy = data.browsingBy;
+    this.incentives = data.incentives;
+    this.acuator_data = data;
     
     this.events = {};
     this.awake();
@@ -58,11 +66,17 @@ Actuator.prototype.actuate = function(page,data){
             this.showBrowse(data);
             break
             
+        case "advanced": 
+            this.showSidebar();
+            this.showBrowse(data);
+            break
+            
         case "blog":
             this.showBlog(data);
             break;
             
         default:            // big-search
+            //this.showSidebar();
             this.showCleanSearch(data);
             break;
     }
@@ -88,29 +102,57 @@ Actuator.prototype.showFull = function(request){
 }
 
 Actuator.prototype.showCleanSearch = function(searchOptions){
+    console.log(this.searchingBy);
+    console.log(this.searchByOptions);
     var container = this.build.makeElement(this.content,"Div","big-search-container");
     var searchbar = this.build.makeSearchBar(container,"big-search");
-    this.build.buildMenu(container,searchOptions[0],searchOptions[1],"search-options","update-search","options");
-    this.recentBar(searchOptions[2]);
+    this.build.buildMenu(container,this.acuator_data.searchingBy,this.acuator_data.searchByOptions,"search-options","update-search","options");
+    this.recentBar(this.acuator_data.incentives);
 }
 
 Actuator.prototype.showAdvancedSearch = function(){
     console.log("Showing Advanced Search");
-    var advanced_search_container = this.makeElement(this.content,"Div","advance-search-container");
+    var search_criteria = this.searchCriteria;
+    
+    var container = this.makeElement(this.content,"Div","advance-search-container");
+    for(var criterium in search_criteria){
+        this.makeElement(container,"Div","search-criteria-label","",criterium);
+    }
 }
 
-Actuator.prototype.showBrowse = function(data){
-    var browse_header = this.build.makeElement(this.content,"Div","browse-header","","Browse by:");
+Actuator.prototype.showBrowse = function(dataObj){
+    console.log(dataObj);
+    var type = dataObj.type;
+    console.log(type);
+    var data = dataObj.data;
+    var container = this.build.makeElement(this.content,"Div","browse-container");
+    
+    var browse_header = this.build.makeElement(container,"Div","browse-header","","Browse by:");
     var dropdown_options = [{display: "name",id:"name"}, 
                             {display: "cuisine",id:"cuisine"},
                             {display: "language",id:"language"}
                             ];
     this.build.buildMenu(browse_header,"browse-menu",dropdown_options,"visible","update-browse","name");
-    var container = this.build.makeElement(this.content,"Div","browse-container");
+    
+    
     var content = this.build.makeElement(container,"Div","browse-content");
-    for(var i=0;i<data.length;i++){
-        var result = data[i];
-        this.build.buildResult(content,result,"browse");
+    if(type == "name"){
+       for(var i=0;i<data.length;i++){
+            var result = data[i];
+            this.build.buildResult(content,result,"browse");
+       } 
+    } else {
+        for(var i=0;i<data.length;i++){
+            var obj = data[i];
+            for( var header in obj){
+                this.build.makeElement(content,"Div","browse-subhead","",header);
+                var entries = obj[header];
+                for(var e = 0; e<entries.length; e++){
+                    var entry = obj[header][e];
+                    this.build.buildResult(content,entry,"browse");
+                }
+            }
+       } 
     }
 }
 
@@ -122,12 +164,21 @@ Actuator.prototype.showBlog = function(){
 
 Actuator.prototype.showSidebar = function(){
     var sidebar_container = this.build.makeElement(this.content,"Div","sidebar-container");
+    
     var browse_header = this.build.makeElement(sidebar_container,"Div","sidebar-header","","Browse By");
     this.build.makeElement(browse_header,"Div","sidebar-subhead","name","Alphabetical");
-    this.build.bindEventListener("name","change-page","click");
+    this.build.bindEventListener("name","update-browse","click");
     this.build.makeElement(browse_header,"Div","sidebar-subhead","cuisine","Cuisine");
+    this.build.bindEventListener("cuisine","update-browse","click");
     this.build.makeElement(browse_header,"Div","sidebar-subhead","language","Language");
-    this.build.makeElement(browse_header,"Div","sidebar-header","name","Advanced Search");
+    this.build.bindEventListener("language","update-browse","click");
+    this.build.makeElement(browse_header,"Div","sidebar-subhead","name","More");
+    this.build.bindEventListener("language","update-browse","click");
+    
+    this.build.makeElement(sidebar_container,"Div","sidebar-header","name","Collections");
+    this.build.makeElement(sidebar_container,"Div","sidebar-collections-container","");
+    
+    this.build.makeElement(sidebar_container,"Div","sidebar-header","name","Advanced Search");
     this.build.makeElement(sidebar_container,"Div","ad","ad-sidebar");
 }
 

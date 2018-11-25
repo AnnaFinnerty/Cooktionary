@@ -7,14 +7,16 @@ function SearchManager(){
                             {display: "advanced search",id:"search_advanced"},
                             {display: "random ingredient",id:"show_random"}
                            ];
-    this.browseCategories = ["name","language","cuisine"];
-    this.collections = ["spices","Chinese Food","cuisine"];
+    this.browseCategories = ["name","language","cuisine","form"];
+    this.collections = [{display:"Chinese dishes",tag: "chinese","field":"cuisine"},
+                         {display:"Spices",tag: "spice","field":"form"},
+                       ];
     this.browsingBy = "name";
     this.browsePosition = 0;
-    this.advancedSearch = {
-        forms: [],
-        languages: [],
-        cuisines: [],
+    this.searchCriteria = {
+        form: [],
+        language: [],
+        cuisine: [],
         mistaken: [],
         similiar: [],
     }
@@ -26,26 +28,12 @@ function SearchManager(){
 
 SearchManager.prototype.awake = function(){
     //most of this can probably be done by the database
-    var cuisines = {};
-    var langs = {};
-    for(var i in this.data){
-        for(var c in this.data[i]['cuisines']){
-            if(!cuisines[c]){
-                cuisines[c] = [];
-            }
-            cuisines[c].push(i);
-        }
-        for(var l in this.data[i]['names']){
-            if(l != "scientific"){
-                if(!langs[l]){
-                    langs[l] = [];
-                }
-                    langs[l].push(i);
-                }
+    var searchData = {};
+    for(var category in this.searchCriteria){
+        for(var i in this.data){
+            
         }
     }
-    //console.log(langs);
-    //console.log(cuisines);
 }
 
 SearchManager.prototype.showRandom = function(){
@@ -66,7 +54,7 @@ SearchManager.prototype.fakeBrowse = function(category){
     if(category === "language"){
         var langs = {};
         for(var i in this.data){
-            for(var l in this.data[i]['names']){
+            for(var l in this.data[i]['name']){
             if(l != "scientific"){
                 if(!langs[l]){
                     langs[l] = [];
@@ -77,12 +65,14 @@ SearchManager.prototype.fakeBrowse = function(category){
         }
         console.log(langs);
         for(var r in langs){
-            results.push(langs[r]);
+            var obj = {};
+            obj[r] = langs[r];
+            results.push(obj);
         } 
     } else if (category === "cuisine"){
         var cuisines = {};
         for(var i in this.data){
-            for(var c in this.data[i]['cuisines']){
+            for(var c in this.data[i]['cuisine']){
                 console.log(c);
                 if(!cuisines[c]){
                     cuisines[c] = [];
@@ -91,7 +81,9 @@ SearchManager.prototype.fakeBrowse = function(category){
             }
         }
         for(var r in cuisines){
-            results.push(cuisines[r]);
+            var obj = {};
+            obj[r] = cuisines[r];
+            results.push(obj);
         } 
     } else {
         for(var i in data){
@@ -100,6 +92,11 @@ SearchManager.prototype.fakeBrowse = function(category){
     }
     console.log(results);
     return results;
+}
+
+SearchManager.prototype.newFakeBrowse = function(category){
+    var data = this.data;
+    var results = [];
 }
 
 SearchManager.prototype.updateBrowseSettings = function(newCategory){

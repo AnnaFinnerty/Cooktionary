@@ -1,14 +1,52 @@
 var fakeData = {
+    fennel_bulb: {
+        id: "fennel_bulb",
+        color: "green",
+        classification: ["vegetable"],
+        form:["root","vegetable","fresh"],
+        name: {
+            scientific: "",
+            english: ["Fennel Bulb"],
+            spanish: ["canela"]
+        },
+        cuisine:{
+            chinese: {
+                dishes:["char siu"],
+                other:["five spice powder"]
+            }
+        },
+        similiar: ["cumin"],
+        mistaken: ["anise","star_anise"],
+    },
+    tomato: {
+        id: "tomato",
+        color: "red",
+        classification: ["vegetable"],
+        form:["vegetable","fresh"],
+        name: {
+            scientific: "",
+            english: ["Tomato"],
+            french: ["Tomate"]
+        },
+        cuisine:{
+            italian: {
+                dishes:["pasta sauce"],
+                other:[]
+            }
+        },
+        similiar: [],
+        mistaken: [],
+    },
     anise: {
         id: "anise",
         color: "darkgreen",
         classification: ["spice"],
-        forms:["whole","ground"],
-        names: {
+        form:["whole","ground"],
+        name: {
             scientific: "",
             english: ["anise","aniseed"],
         },
-        cuisines:{
+        cuisine:{
             italian: {
                 dishes:["char siu"],
                 other:["five spice powder"]
@@ -21,13 +59,13 @@ var fakeData = {
         id: "star_anise",
         color: "saddlebrown",
         classification: ["spice"],
-        forms:["whole"],
-        names: {
+        form:["whole"],
+        name: {
             scientific: "",
             english: ["star anise","anise","Illicium"],
             persian: ["bādiyān","بادیان"]
         },
-        cuisines:{
+        cuisine:{
             chinese: {
                 dishes:["char siu"],
                 other:["five spice powder"]
@@ -40,32 +78,32 @@ var fakeData = {
         id: "cinnamon",
         color: "brown",
         classification: ["spice"],
-        forms:["whole","ground"],
-        names: {
+        form:["whole","ground"],
+        name: {
             scientific: "",
             english: ["cinnamon"],
             spanish: ["canela"]
         },
-        cuisines:{
+        cuisine:{
             chinese: {
                 dishes:["char siu"],
                 other:["five spice powder"]
             }
         },
         similiar: ["cumin"],
-        mistaken: ["cloves"],
+        mistaken: [],
     },
     fennel_seed: {
         id: "fennel_seed",
         color: "lightgreen",
         classification: ["spice"],
-        forms:["whole","ground","mixes"],
-        names: {
+        form:["whole","ground","mixes"],
+        name: {
             scientific: "",
             english: ["fennel seed"],
             spanish: ["canela"]
         },
-        cuisines:{
+        cuisine:{
             chinese: {
                 dishes:["char siu"],
                 other:["five spice powder"]
@@ -74,25 +112,7 @@ var fakeData = {
         similiar: ["cumin"],
         mistaken: ["anise","star_anise"],
     },
-    fennel_bulb: {
-        id: "green",
-        color: "",
-        classification: ["vegetable"],
-        forms:["root","vegetable","fresh"],
-        names: {
-            scientific: "",
-            english: ["Fennel Bulb"],
-            spanish: ["canela"]
-        },
-        cuisines:{
-            chinese: {
-                dishes:["char siu"],
-                other:["five spice powder"]
-            }
-        },
-        similiar: ["cumin"],
-        mistaken: ["anise","star_anise"],
-    }
+    
 }
 
 var fakeBlog = [

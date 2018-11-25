@@ -8,7 +8,7 @@ function Build(callback, isMobile){
 
 
 Build.prototype.buildResult = function(container, result, style){
-    var name = result['names'][this.language][0];
+    var name = result['name'][this.language][0];
         name = this.capitalize(name);
     console.log(style);
     switch(style){
@@ -35,21 +35,27 @@ Build.prototype.buildResult = function(container, result, style){
 }
 
 Build.prototype.makeBrowseResult = function(container,result,style,name){
-    var result_container = this.makeElement(container,"Div","result-item-"+ style,result.id,"");
-    var result_image = this.makeImg(result_container,result.id,result.id,"result-image-"+ style);
-    var result_label = this.makeElement(result_container,"h1","result-label-" + style,name + "-label",name);
+    var result_container = this.makeElement(container,"Div","result-item-"+ style + " block",result.id,"");
+    var row1 = this.makeElement(result_container,"Div","block");
+    var result_label = this.makeElement(row1,"h1","result-label-" + style,name + "-label",name);
+    var row2 = this.makeElement(result_container,"Div","inline");
+    var result_image = this.makeImg(row2,result.id,result.id,"result-image-"+ style);
     this.bindEventListener(result.id,"show-full","click");
-    var row2 = this.makeElement(result_container,"Div","block");
-        for(var names_subhead in result.names){
+    var column2 = this.makeElement(row2,"Div","block");
+    var counter = 0;
+        for(var names_subhead in result.name){
             if(names_subhead != "scientific"){
-                var names = result['names'][names_subhead];
+                var names = result['name'][names_subhead];
                 for(var n = 0 ; n < names.length; n++){
-                    var name = this.capitalize(names[n]);
-                    var name_label = this.makeElement(row2,"Div","result-label-" + style + " inline-flex","",name);
+                    var alt_name = this.capitalize(names[n]);
+                    if(counter<3 && alt_name != name){
+                        var name_label = this.makeElement(column2,"Div","list-item-" + style + " inline-flex","",alt_name);
+                        counter++;
+                    }
                 }
             } 
     }
-    var see_more = this.makeElement(result_container,"Div","more"+style, result.id,"<span class='glyphicons glyphicons-more icon'></span>");
+    var see_more = this.makeElement(column2,"Div","more"+style, result.id,"<span class='glyphicons glyphicons-more icon'></span>");
 }
 
 Build.prototype.expandBrowseResult = function(container,result,style,name){
@@ -62,9 +68,9 @@ Build.prototype.makeExpandedResult = function(container,result,style,name){
     var result_label = this.makeElement(result_container,"h1","result-label-" + style,name + "-label",name);
     this.bindEventListener(result.id,"show-full","click");
     var row2 = this.makeElement(result_container,"Div","block");
-    for(var names_subhead in result.names){
+    for(var names_subhead in result.name){
             if(names_subhead != "scientific"){
-                var names = result['names'][names_subhead];
+                var names = result['name'][names_subhead];
                 for(var n = 0 ; n < names.length; n++){
                     var name = this.capitalize(names[n]);
                     var name_label = this.makeElement(row2,"Div","result-label-" + style + " inline-flex","",name);
@@ -85,33 +91,51 @@ Build.prototype.makeFullResult = function(container,result,style,name){
     var result_container = this.makeElement(container,"Div","result-item-"+ style + " inline",result.id,"");
     var row1 = this.makeElement(result_container,"Div","full-image-row inline-block");
     var result_image = this.makeImg(row1,result.id,result.id,"result-image-"+ style);
+    for(var i=0 ; i<5; i++){
+        this.makeAd(row1,"ad-sidebar",result.id);
+    }
     //MTC make ads
     
     var row2 = this.makeElement(result_container,"Div","block");
+        var result_class = this.makeElement(row2,"Div","result-header-" + style + " inline-wrap","","Class:");
+        this.appendList(result_class,result['classification'],"list-item-" + style,"click","show-full");
     
         var names_head = this.makeElement(row2,"Div","result-header-"+ style,"","Names:");
-        for(var names_subhead in result.names){
+        for(var names_subhead in result.name){
             if(names_subhead == "scientific"){
                 var sub = this.makeElement(row2,"Div","result-label-" + style,"","Scientific Name:");
-                this.makeElement(sub,"Span","result-sci-name-" + style,"",result.names.scientific);
+                this.makeElement(sub,"Span","underline","",result.name.scientific);
             } else {
                 var lang = this.capitalize(names_subhead);
                 var lang_label = this.makeElement(row2,"Div","result-label-" + style + " inline-flex","",lang+":");
-                this.appendList(lang_label,result['names'][names_subhead],"list-item-" + style);
+                this.appendList(lang_label,result['name'][names_subhead],"underline");
             }
         }
-        var result_form = this.makeElement(row2,"Div","result-label-" + style,"","Forms:");
-        this.appendList(result_form,result['forms'],"list-item-" + style);
+        var result_form = this.makeElement(row2,"Div","result-header-" + style,"","Forms:");
+        this.appendList(row2,result['form'],"list-item-" + style);
         var cuisines_head = this.makeElement(row2,"Div","result-header-"+ style,"","Cuisines:");
-        for(var cuisine_subhead in result.cuisines){
+        for(var cuisine_subhead in result.cuisine){
             var cuisine = this.capitalize(cuisine_subhead);
             var cusine_label = this.makeElement(row2,"Div","result-label-" + style + " inline-flex","",cuisine+":");
-            this.appendList(lang_label,result['cuisines'][cuisine_subhead],"list-item-" + style,"click","run-search");
+            this.appendList(lang_label,result['cuisine'][cuisine_subhead],"list-item-" + style,"click","run-search");
         }
-        var result_similar = this.makeElement(row2,"Div","result-label-" + style,"","Similar to:");
-        this.appendList(result_similar,result['similiar'],"list-item-" + style,"click","show-full");
-        var result_mistaken = this.makeElement(row2,"Div","result-label-" + style,"","Mistaken for:");
-        this.appendList(result_similar,result['mistaken'],"list-item-" + style,"click","show-full");
+    
+        if(result['similiar'].length){
+            var result_similar = this.makeElement(row2,"Div","result-label-" + style + " inline-wrap","","Similar to:");
+            this.appendList(result_similar,result['similiar'],"list-item-" + style,"click","show-full");
+        }
+        
+        if(result['mistaken'].length){
+            var result_mistaken = this.makeElement(row2,"Div","result-label-" + style,"","Mistaken for:");
+            this.appendList(result_mistaken,result['mistaken'],"list-item-" + style,"click","show-full");
+        }
+        
+    
+    var ad_row = this.makeElement(row2,"Div","inline inline-ads");
+    
+    for(var i=0 ; i<4; i++){
+        this.makeAd(ad_row,"ad-small",result.id);
+    }
 }
 
 Build.prototype.makeAd = function(container,style,targetProduct){
@@ -162,6 +186,7 @@ Build.prototype.buildMenu = function(container,name,option_array,style,action,di
 }
 
 Build.prototype.appendList = function(container,array,style,event,action){
+    //console.log(array);
     for(var i=0;i<array.length;i++){
         var item = array[i];
         var id = this.returnID(item);
@@ -174,7 +199,7 @@ Build.prototype.appendList = function(container,array,style,event,action){
 }
 
 Build.prototype.getID = function(raw_id){
-    var split = raw_id.split(":");
+    var split = raw_id.split(".");
     if(split.length > 1){
         return split[1];
     } else {
@@ -220,72 +245,3 @@ Build.prototype.returnID = function(name){
 Build.prototype.setMobile = function(isMobile){
     this.mobile = isMobile;
 }
-
-/*
-Build.prototype.buildResultOld = function(container,result,style){
-    console.log(result);
-    var name = result['names'][this.language][0];
-        name = this.capitalize(name);
-    var result_container;
-    if(this.style != "browse-expanded"){
-        result_container = this.makeElement(container,"Div","result-item-"+ style,result.id,"");
-    } else {
-        result_container = container;
-    }
-    
-    //this should be adjust by type -- click should not occur in full.
-    
-    if(style === "browse" || style == "expanded"){
-        var result_image = this.makeImg(result_container,result.id,result.id,"result-image-"+ style);
-        var result_label = this.makeElement(result_container,"h1","result-label-" + style,name + "-label",name);
-        this.bindEventListener(result.id,"show-full","click");
-    } else {
-        var result_label = this.makeElement(result_container,"h1","result-label-" + style,name + "-label",name);
-        var result_image = this.makeImg(result_container,result.id,result.id,"result-image-"+ style);
-    }
-    if(style == "expanded"){
-        var row2 = this.makeElement(result_container,"Div","block");
-        for(var names_subhead in result.names){
-            if(names_subhead != "scientific"){
-                var names = result['names'][names_subhead];
-                for(var n = 0 ; n < names.length; n++){
-                    var name = this.capitalize(names[n]);
-                    var name_label = this.makeElement(row2,"Div","result-label-" + style + " inline-flex","",name);
-                }
-            } 
-        }
-    }
-    
-    //probably shortend by negatating
-    if(style === "full"|| style == "browse-expanded"){
-        var row2 = this.makeElement(result_container,"Div","block");
-        var names_head = this.makeElement(row2,"Div","result-header-"+ style,"","Names:");
-        for(var names_subhead in result.names){
-            if(names_subhead == "scientific"){
-                var sub = this.makeElement(row2,"Div","result-label-" + style,"","Scientific Name:");
-                this.makeElement(sub,"Span","result-sci-name-" + style,"",result.names.scientific);
-            } else {
-                var lang = this.capitalize(names_subhead);
-                var lang_label = this.makeElement(row2,"Div","result-label-" + style + " inline-flex","",lang+":");
-                this.appendList(lang_label,result['names'][names_subhead],"list-item-" + style);
-            }
-        }
-        var result_form = this.makeElement(row2,"Div","result-label-" + style,"","Forms:");
-        this.appendList(result_form,result['forms'],"list-item-" + style);
-        var cuisines_head = this.makeElement(row2,"Div","result-header-"+ style,"","Cuisines:");
-        for(var cuisine_subhead in result.cuisines){
-            var cuisine = this.capitalize(cuisine_subhead);
-            var cusine_label = this.makeElement(row2,"Div","result-label-" + style + " inline-flex","",cuisine+":");
-            this.appendList(lang_label,result['cuisines'][cuisine_subhead],"list-item-" + style);
-        }
-        var result_similar = this.makeElement(row2,"Div","result-label-" + style,"","Similar to:");
-        this.appendList(result_similar,result['similiar'],"list-item-" + style);
-        var result_mistaken = this.makeElement(row2,"Div","result-label-" + style,"","Mistaken for:");
-        this.appendList(result_similar,result['mistaken'],"list-item-" + style);
-    }
-    if(style != "full"){
-        var see_more = this.makeElement(result_container,"Div","more"+style, result.id,"<span class='glyphicons glyphicons-more'></span>");
-    }
-    
-}
-*/

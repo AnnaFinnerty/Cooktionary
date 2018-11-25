@@ -1,16 +1,31 @@
 function App(){
     console.log("App Running!");
     
-    var isMobile = this.detectMobile();
-    this.adManager = new AdManager();
-    this.actuator = new Actuator(isMobile);
-    this.inputManager = new InputManager();
-    this.searchManager = new SearchManager();
     this.storageManager = new StorageManager(this.goBack.bind(this));
     
+    var isMobile = this.detectMobile();
+    this.adManager = new AdManager();
+    this.searchManager = new SearchManager();
+    this.language = "english";
     
-    this.lastPage = "clean-search";
-    this.display_language = "english";
+    this.acuator_data = {
+        language: this.language,
+        isMobile: isMobile,
+        collections: this.searchManager.collections,
+        searchByOptions: this.searchManager.searchByOptions,
+        browseCategories: this.searchManager.browseCategories,
+        searchingBy: this.searchManager.searchBy,
+        browsingBy: this.searchManager.browsingBy,
+        searchCriteria: this.searchManager.searchCriteria,
+        incentives: this.storageManager.incentives,
+        recent: this.searchManager.recent
+    }
+    this.actuator = new Actuator(this.acuator_data);
+    this.inputManager = new InputManager();
+    
+    
+    //this.lastPage = "clean-search";
+    
     
     this.awake();
 }
@@ -37,6 +52,10 @@ App.prototype.actuate = function(page,data){
     this.updateHistory(page,data);
 }
 
+App.prototype.updateAcuator = function(){
+    
+}
+
 App.prototype.updateHistory = function(page,data){
     var id;
     switch(page){
@@ -59,17 +78,28 @@ App.prototype.goBack = function(page,data){
     console.log("Go back!")
     console.log(page);
     console.log(data);
-    if(page == "back-button"){
-        var lastPage = this.storageManager.getLastPage();
-        console.log(lastPage);
-        page = lastPage[0];
-        data = lastPage[1];
-        this.changePage(page,data);
+    
+    switch(page){
+        case "full":
+            this.showFull(data);
+            break;
+            
+        case "browse":
+            this.updateBrowse(data);
+            break;
+            
+        case "back-button":
+            var lastPage = this.storageManager.getLastPage();
+            console.log(lastPage);
+            page = lastPage[0];
+            data = lastPage[1];
+            this.changePage(page,data);
+            break;
+            
+        default:
+            this.changePage(page,data);
+            break;
     }
-    if(page == "full"){
-        this.showFull(data);
-    }
-   
 }
 
 App.prototype.changePage = function(page,data){
@@ -78,44 +108,9 @@ App.prototype.changePage = function(page,data){
     if(page === "clean-search"){
         this.actuate("clean-search",[this.searchManager.searchBy, this.searchManager.searchByOptions,this.storageManager.incentives]);
         //this.loadScreen();
-    } else if (page == "browse") {
-        this.actuate(page,this.searchManager.browse());
     } else {
         this.actuate(page,data);
     }  
-}
-
-App.prototype.newchangePage = function(page,data){
-    console.log("test!");
-    console.log("New Changing page!");
-    console.log(page);
-    console.log(data);
-    switch(page){
-        case "show-full":
-            var record = this.searchManager.findSingleRecord(data);
-            this.actuate("full",record);
-            break;
-            
-        case "browse":
-            this.actuate(page,this.searchManager.browse());
-            break;
-            
-        case "clean-search":
-            this.loadScreen();
-            break;
-            
-        case "run-search":
-            if(data){
-                this.updateSearchText(data);
-            }
-            this.runSearch();
-            break;
-            
-        default:
-            this.actuate(page,data);
-            break;
-    }
-    
 }
 
 App.prototype.loadScreen = function(){
@@ -142,8 +137,13 @@ App.prototype.runSearch = function(){
 }
 
 App.prototype.updateBrowse = function(newSetting){
+    console.log("update browse");
     this.searchManager.updateBrowseSettings(newSetting);
-    this.changePage("browse");
+    var data = {
+        type: this.searchManager.browsingBy,
+        data: this.searchManager.browse()
+    }
+    this.changePage("browse",data);
 }
 
 App.prototype.showFull = function(request){

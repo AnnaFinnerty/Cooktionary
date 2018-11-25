@@ -25,13 +25,18 @@ span{
 .header{
     width: 100vw;
     height: 14vh;
-    border-bottom: 1px solid black;
 }
 
 .logo{
     width: 100vw;
     height: 10vh;
     text-shadow: 1px 1px goldenrod;
+    cursor: pointer;
+}
+
+.logo:hover{
+    color: goldenrod;
+    text-shadow: 2px 2px black;
 }
 
 .logo-container{
@@ -89,6 +94,32 @@ span{
     margin: 0;
     margin-top: 5vh;
     height: 72.5vh;
+}
+
+.sidebar-header{
+    font-size: 4vh;
+}
+
+.sidebar-header-mobile{
+    font-size: 2vh;
+}
+
+.sidebar-subhead{
+    font-size: 3vh;
+    background: white;
+    border: 1px solid dimgray;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+    padding-left: 2vw;
+    width: 98%;
+}
+
+.sidebar-subhead-mobile{
+    font-size: 1.5vh;
+}
+
+.sidebar-subhead:hover{
+    background: rgb(245,245,205); 
 }
 
 /*SEARCH*/
@@ -186,11 +217,22 @@ span{
 }
 
 .result-header-full{
+    font-weight: 600;
     font-size: 5vh;
+    margin: 1vh;
+}
+
+.result-header-full-mobile{
+    font-size: 4vh;
+    margin: 1vh;
 }
 
 .back-button{
     transform: translate(50vw,-2vh);
+}
+
+.back-button-mobile{
+    transform: translate(30vw,-1vh);
 }
 
 .result-item-full{
@@ -209,20 +251,46 @@ span{
 }
 
 .result-label-full{
+    vertical-align: middle;
+    font-size: 4vh;
     margin: 2vh;
 }
 
+.result-label-full-mobile{
+    vertical-align: middle;
+    font-size: 3vh;
+    margin: 1vh;
+}
+
 .list-item-full{
+    font-size: 3vh;
     border: 1px solid black;
     padding: .5vh;
-    margin: .5vh;
+    margin: 1vh;
+}
+
+.list-item-full-mobile{
+    font-size: 2vh;
+    border: 1px solid black;
+    padding: .5vh;
+    margin: 1vh;
+}
+
+.list-item-full:hover{
+    background: rgb(245,245,170);
 }
 
 /*BROWSE*/
 
 .browse-header{
     font-size: 5vh;
-    transform: translate(20vw,8vh);
+}
+
+.browse-subhead{
+    color: dimgray;
+    font-size: 5vh;
+    width: 100%;
+    text-decoration: underline;
 }
 
 .browse-content{
@@ -232,25 +300,36 @@ span{
 }
 
 .result-item-browse{
-    width: 20vw;
+    width: 23vw;
     height: 20vw;
     border: 1px solid black;
     padding: 1vh;
     margin: 1vh;
+    border-radius: 2px;
 }
 
 .result-item-browse:hover{
-    background: lightgray;
+    background: rgb(245,245,205);
+}
+
+.result-label-browse{
+    font-weight: 800;
+    font-size: 3.5vh;
+    padding: 1vh;
 }
 
 .result-image-browse{
-    width: 15vw;
-    height: 15vw;
+    width: 13vw;
+    height: 13vw;
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
     border: 2px solid dimgray;
     border-radius: 1vw;
+}
+
+.list-item-browse{
+    padding: .5vh;
 }
 
 /*RECENT*/
@@ -309,7 +388,12 @@ span{
 .ad{
     border: 2px solid gray;
     border-radius: 2px;
-    background: white;
+    background: lightblue;
+}
+
+.ad-small{
+    width: 12vw;
+    height: 12vw;
 }
 
 .ad-sidebar{
@@ -369,11 +453,28 @@ span{
     flex-wrap: nowrap;
 }
 
+.inline-wrap{
+    width: 100%;
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
 .inline-block{
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
     justify-content: top;
+}
+
+.underline{
+    text-decoration: underline;
+}
+
+.box{
+    border: 1px solid black;
+    padding: .5vh;
+    margin: 1vh;
 }
 
 .hidden{
