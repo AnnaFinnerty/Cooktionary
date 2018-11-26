@@ -23,23 +23,19 @@ function App(){
     this.actuator = new Actuator(this.acuator_data);
     this.inputManager = new InputManager();
     
-    
-    //this.lastPage = "clean-search";
-    
-    
     this.awake();
 }
 
 App.prototype.awake = function(){
      
-    this.actuator.on("change-page",this.changePage.bind(this));
-    this.actuator.on("update-text",this.updateSearchText.bind(this));
-    this.actuator.on("update-search",this.updateSearchParameter.bind(this));
-    this.actuator.on("run-search",this.runSearch.bind(this));
-    this.actuator.on("update-browse",this.updateBrowse.bind(this));
-    this.actuator.on("show-random",this.showRandom.bind(this));
-    this.actuator.on("show-full",this.showFull.bind(this));
-    this.actuator.on("go-back",this.goBack.bind(this));
+    this.actuator.on("change_page",this.changePage.bind(this));
+    this.actuator.on("update_text",this.updateSearchText.bind(this));
+    this.actuator.on("update_search",this.updateSearchParameter.bind(this));
+    this.actuator.on("run_search",this.runSearch.bind(this));
+    this.actuator.on("update_browse",this.updateBrowse.bind(this));
+    this.actuator.on("show_random",this.showRandom.bind(this));
+    this.actuator.on("show_full",this.showFull.bind(this));
+    this.actuator.on("go_back",this.goBack.bind(this));
     this.actuator.on("register",this.registerAd.bind(this));
     
     this.inputManager.on("enter",this.runSearch.bind(this));
@@ -105,8 +101,8 @@ App.prototype.goBack = function(page,data){
 App.prototype.changePage = function(page,data){
     console.log("Changing page!");
     console.log(page);
-    if(page === "clean-search"){
-        this.actuate("clean-search",[this.searchManager.searchBy, this.searchManager.searchByOptions,this.storageManager.incentives]);
+    if(page === "clean_search"){
+        this.actuate("clean_search",[this.searchManager.searchBy, this.searchManager.searchByOptions,this.storageManager.incentives]);
         //this.loadScreen();
     } else {
         this.actuate(page,data);
@@ -119,7 +115,7 @@ App.prototype.loadScreen = function(){
         searchOptions: this.searchManager.searchByOptions,
         recent: this.storageManager.recent
     }
-    this.actuate("clean-search",[this.searchManager.searchBy, this.searchManager.searchByOptions,this.storageManager.incentives]);
+    this.actuate("clean_search",[this.searchManager.searchBy, this.searchManager.searchByOptions,this.storageManager.incentives]);
 }
 
 App.prototype.runSearch = function(){

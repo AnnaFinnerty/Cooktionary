@@ -40,7 +40,7 @@ Build.prototype.makeBrowseResult = function(container,result,style,name){
     var result_label = this.makeElement(row1,"h1","result-label-" + style,name + "-label",name);
     var row2 = this.makeElement(result_container,"Div","inline");
     var result_image = this.makeImg(row2,result.id,result.id,"result-image-"+ style);
-    this.bindEventListener(result.id,"show-full","click");
+    this.bindEventListener(result.id,"show_full","click");
     var column2 = this.makeElement(row2,"Div","block");
     var counter = 0;
         for(var names_subhead in result.name){
@@ -66,7 +66,7 @@ Build.prototype.makeExpandedResult = function(container,result,style,name){
     var result_container = this.makeElement(container,"Div","result-item-"+ style,result.id,"");
     var result_image = this.makeImg(result_container,result.id,result.id,"result-image-"+ style);
     var result_label = this.makeElement(result_container,"h1","result-label-" + style,name + "-label",name);
-    this.bindEventListener(result.id,"show-full","click");
+    this.bindEventListener(result.id,"show_full","click");
     var row2 = this.makeElement(result_container,"Div","block");
     for(var names_subhead in result.name){
             if(names_subhead != "scientific"){
@@ -86,7 +86,7 @@ Build.prototype.makeFullResult = function(container,result,style,name){
     var header = this.makeElement(container,"Div","inline","");
     var result_label = this.makeElement(header,"h1","result-header-" + style,name + "-header",name);
     this.makeElement(header,"Button","back-button","back-button","<span class='glyphicons glyphicons-remove-circle icon'></span>")
-    this.bindEventListener("back-button","go-back","click");
+    this.bindEventListener("back-button","go_back","click");
     
     var result_container = this.makeElement(container,"Div","result-item-"+ style + " inline",result.id,"");
     var row1 = this.makeElement(result_container,"Div","full-image-row inline-block");
@@ -98,7 +98,7 @@ Build.prototype.makeFullResult = function(container,result,style,name){
     
     var row2 = this.makeElement(result_container,"Div","block");
         var result_class = this.makeElement(row2,"Div","result-header-" + style + " inline-wrap","","Class:");
-        this.appendList(result_class,result['classification'],"list-item-" + style,"click","show-full");
+        this.appendList(result_class,result['classification'],"list-item-" + style,"click","show_full");
     
         var names_head = this.makeElement(row2,"Div","result-header-"+ style,"","Names:");
         for(var names_subhead in result.name){
@@ -117,17 +117,17 @@ Build.prototype.makeFullResult = function(container,result,style,name){
         for(var cuisine_subhead in result.cuisine){
             var cuisine = this.capitalize(cuisine_subhead);
             var cusine_label = this.makeElement(row2,"Div","result-label-" + style + " inline-flex","",cuisine+":");
-            this.appendList(lang_label,result['cuisine'][cuisine_subhead],"list-item-" + style,"click","run-search");
+            this.appendList(lang_label,result['cuisine'][cuisine_subhead],"list-item-" + style,"click","run_search");
         }
     
         if(result['similiar'].length){
             var result_similar = this.makeElement(row2,"Div","result-label-" + style + " inline-wrap","","Similar to:");
-            this.appendList(result_similar,result['similiar'],"list-item-" + style,"click","show-full");
+            this.appendList(result_similar,result['similiar'],"list-item-" + style,"click","show_full");
         }
         
         if(result['mistaken'].length){
             var result_mistaken = this.makeElement(row2,"Div","result-label-" + style,"","Mistaken for:");
-            this.appendList(result_mistaken,result['mistaken'],"list-item-" + style,"click","show-full");
+            this.appendList(result_mistaken,result['mistaken'],"list-item-" + style,"click","show_full");
         }
         
     
@@ -166,10 +166,10 @@ Build.prototype.makeSearchBar = function(container,style){
     var content = this.makeElement(container,"Div","inline");
     
     var searchBar = this.makeElement(content,"Input","search-bar " + style,"search-input");
-    this.bindEventListener("search-input","update-text","input");
+    this.bindEventListener("search-input","update_text","input");
     
     var searchButton = this.makeElement(content,"Button","search-button","search","<span class='glyphicons glyphicons-question-sign seach-button icon'></span>");
-    this.bindEventListener("search","run-search","click");
+    this.bindEventListener("search","run_search","click");
     
     return searchBar;
 }
@@ -198,14 +198,6 @@ Build.prototype.appendList = function(container,array,style,event,action){
     }
 }
 
-Build.prototype.getID = function(raw_id){
-    var split = raw_id.split(".");
-    if(split.length > 1){
-        return split[1];
-    } else {
-        return split[0];
-    }
-}
 
 Build.prototype.bindEventListener = function(el_id,action,event){
     //console.log(el_id);
@@ -235,6 +227,15 @@ Build.prototype.capitalize = function(string){
 Build.prototype.returnName = function(id){
     var name = id.replace("_", " ");
     return name;
+}
+
+Build.prototype.getID = function(raw_id){
+    var split = raw_id.split("-");
+    if(split.length > 1){
+        return split[1];
+    } else {
+        return split[0];
+    }
 }
 
 Build.prototype.returnID = function(name){
