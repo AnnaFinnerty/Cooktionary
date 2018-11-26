@@ -146,6 +146,17 @@ App.prototype.updateBrowse = function(newSetting){
     this.changePage("browse",data);
 }
 
+App.prototype.updateSearchParameter = function(searchData){
+    console.log("updating search!");
+    if(searchData == "search_advanced"){
+        this.changePage("advanced",this.searchManager.searchCriteria);
+    } else if (searchData == "show_random") {
+        this.showRandom();
+    } else {
+        this.searchManager.updateSearchParameters(searchData);
+    }
+}
+
 App.prototype.showFull = function(request){
     //another promise should be added here when running from actual database
     var record = this.searchManager.findSingleRecord(request);
@@ -155,11 +166,8 @@ App.prototype.showFull = function(request){
 App.prototype.showRandom = function(){
     //another promise should be added here when running from actual database
     var record = this.searchManager.showRandom();
+    console.log(record);
     this.changePage("full",record);
-}
-
-App.prototype.updateSearchParameter = function(searchData){
-    console.log("updating search!");
 }
 
 App.prototype.detectMobile = function(){

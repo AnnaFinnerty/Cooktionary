@@ -24,21 +24,22 @@ Actuator.prototype.awake = function(){
     var logo = document.querySelector(".logo");
     this.build.bindEventListener("clean-search","change-page","click");
     var logo_container = this.build.makeElement(logo,"Div","logo-container inline");
-    var icons = ["fennel_bulb","tomato"];
+    var icons = ["fennel_bulb","tomato","dragonfruit"];
+    var icon = icons[Math.floor(Math.random()*icons.length)];
     
-    // add icons
-    for(var i=0;i<icons.length;i++){
-        var bwImg = this.build.makeImg(logo_container,"logos/"+icons[i]+"-bw","","logo-item");
-        this.build.makeImg(bwImg,"logos/"+icons[i]+"-color",icons[i],"logo-item fade-out");
-        var added = document.querySelector("#"+icons[i]);
+    // add icon
+    
+    var bwImg = this.build.makeImg(logo_container,"logos/"+icon+"-bw","","logo-item");
+    this.build.makeImg(bwImg,"logos/"+icon+"-color",icon,"logo-item fade-out");
+    var added = document.querySelector("#"+icon);
         added.addEventListener("mouseover",function(){
             this.className = "logo-item fade-in";
         })
         added.addEventListener("mouseout",function(){
             this.className = "logo-item fade-out";
         })
-        this.build.bindEventListener(icons[i],"logo-hover","mouseover");
-    }
+    this.build.bindEventListener(icon,"logo-hover","mouseover");
+    
     var header_dropdown_options = [{display: "search",id:"clean-search"}, 
                                    {display: "browse",id:"browse"},
                                    {display: "blog",id:"blog"}
@@ -68,7 +69,7 @@ Actuator.prototype.actuate = function(page,data){
             
         case "advanced": 
             this.showSidebar();
-            this.showBrowse(data);
+            this.showAdvancedSearch(data);
             break
             
         case "blog":
@@ -114,10 +115,12 @@ Actuator.prototype.showAdvancedSearch = function(){
     console.log("Showing Advanced Search");
     var search_criteria = this.searchCriteria;
     
-    var container = this.makeElement(this.content,"Div","advance-search-container");
+    var container = this.build.makeElement(this.content,"Div","advanced-search-container");
+    var controls_container = this.build.makeElement(container,"Div","");
     for(var criterium in search_criteria){
-        this.makeElement(container,"Div","search-criteria-label","",criterium);
+        this.build.makeElement(controls_container,"Div","search-criteria-label","",criterium);
     }
+    var results_container = this.build.makeElement(this.content,"Div","advanced-search-results-container");
 }
 
 Actuator.prototype.showBrowse = function(dataObj){
@@ -178,8 +181,11 @@ Actuator.prototype.showSidebar = function(){
     this.build.makeElement(sidebar_container,"Div","sidebar-header","name","Collections");
     this.build.makeElement(sidebar_container,"Div","sidebar-collections-container","");
     
-    this.build.makeElement(sidebar_container,"Div","sidebar-header","name","Advanced Search");
-    this.build.makeElement(sidebar_container,"Div","ad","ad-sidebar");
+    this.build.makeElement(sidebar_container,"Div","sidebar-header","search_advanced","Advanced Search");
+    this.build.bindEventListener("search_advanced","update-search","click");
+    
+    
+    this.build.makeElement(sidebar_container,"Div","ad ad-sidebar","ad-sidebar");
 }
 
 
@@ -194,6 +200,10 @@ Actuator.prototype.recentBar = function(data){
         var recent_image = this.build.makeImg(recent_content,recent,recent,"recent-image",display_name);
         this.build.bindEventListener(recent,"show-full","click");
     }
+}
+
+Actuator.prototype.updateResults = function(container_id,new_results){
+    
 }
 
 

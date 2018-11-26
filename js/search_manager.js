@@ -28,8 +28,12 @@ function SearchManager(){
 
 SearchManager.prototype.awake = function(){
     //most of this can probably be done by the database
+    var data = this.data;
     var searchData = {};
     for(var category in this.searchCriteria){
+        if(!searchData[category]){
+            searchData[category] = [];
+        }
         for(var i in this.data){
             
         }
@@ -37,7 +41,9 @@ SearchManager.prototype.awake = function(){
 }
 
 SearchManager.prototype.showRandom = function(){
-    var keys = this.data.keys;
+    var data = this.data;
+    var keys = Object.keys(data);
+    console.log(keys);
     var r = Math.floor(Math.random()*keys.length);
     return this.data[keys[r]];
 }

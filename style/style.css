@@ -34,11 +34,6 @@ span{
     cursor: pointer;
 }
 
-.logo:hover{
-    color: goldenrod;
-    text-shadow: 2px 2px black;
-}
-
 .logo-container{
     transform: translate(0vw,0vh);
 }
@@ -55,6 +50,11 @@ span{
     font-family: 'KoHo', sans-serif;
     font-size: 8vw;
     margin-left: 30vw;
+}
+
+.title:hover{
+    color: goldenrod;
+    text-shadow: 2px 2px black;
 }
 
 .menu-button{
@@ -155,6 +155,34 @@ span{
 .search-options{
     margin-left: 33vw;
     margin-top: -1vh;
+}
+
+/*Advanced Search*/
+
+.advanced-search-container{
+    background: rgb(253,253,255);
+    margin-top: 8vh;
+    transform: translate(20vw,-80.5vh);
+    border: 2px solid dimgray;
+    border-radius: 2px;
+    height: 20vh;
+    width: 80vw;
+    padding: 1vw;
+    padding-left: 2vw;
+    overflow: hidden;
+}
+
+.advanced-search-results-container{
+    background: rgb(253,253,255);
+    margin-top: 8vh;
+    transform: translate(20vw,-80.5vh);
+    border: 2px solid dimgray;
+    border-radius: 2px;
+    height: 40vh;
+    width: 80vw;
+    padding: 1vw;
+    padding-left: 2vw;
+    overflow: scroll;
 }
 
 /*RESULTS*/
@@ -306,10 +334,11 @@ span{
     padding: 1vh;
     margin: 1vh;
     border-radius: 2px;
+    background: rgb(245,245,205);
 }
 
 .result-item-browse:hover{
-    background: rgb(245,245,205);
+    background: rgb(245,245,170);
 }
 
 .result-label-browse{
@@ -397,7 +426,8 @@ span{
 }
 
 .ad-sidebar{
-    height: 20vh;
+    width: 100%;
+    height: 60vh;
 }
 
 .ad-expanded{
