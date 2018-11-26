@@ -22,7 +22,7 @@ function Actuator(data){
 
 Actuator.prototype.awake = function(){
     var logo = document.querySelector(".logo");
-    this.build.bindEventListener("clean-search","change-page","click");
+    this.build.bindEventListener("clean_search","change_page","click");
     var logo_container = this.build.makeElement(logo,"Div","logo-container inline");
     var icons = ["fennel_bulb","tomato","dragonfruit"];
     var icon = icons[Math.floor(Math.random()*icons.length)];
@@ -40,12 +40,12 @@ Actuator.prototype.awake = function(){
         })
     this.build.bindEventListener(icon,"logo-hover","mouseover");
     
-    var header_dropdown_options = [{display: "search",id:"clean-search"}, 
+    var header_dropdown_options = [{display: "search",id:"clean_search"}, 
                                    {display: "browse",id:"browse"},
                                    {display: "blog",id:"blog"}
                                   ];
     var container = document.querySelector(".header");
-    this.build.buildMenu(container,"menu-button",header_dropdown_options,"menu-button","change-page","<span class='glyphicons glyphicons-menu-hamburger icon'></span>");
+    this.build.buildMenu(container,"menu-button",header_dropdown_options,"menu-button","change_page","<span class='glyphicons glyphicons-menu-hamburger icon'></span>");
 }
 
 Actuator.prototype.actuate = function(page,data){
@@ -107,7 +107,7 @@ Actuator.prototype.showCleanSearch = function(searchOptions){
     console.log(this.searchByOptions);
     var container = this.build.makeElement(this.content,"Div","big-search-container");
     var searchbar = this.build.makeSearchBar(container,"big-search");
-    this.build.buildMenu(container,this.acuator_data.searchingBy,this.acuator_data.searchByOptions,"search-options","update-search","options");
+    this.build.buildMenu(container,this.acuator_data.searchingBy,this.acuator_data.searchByOptions,"search-options","update_search","options");
     this.recentBar(this.acuator_data.incentives);
 }
 
@@ -135,7 +135,7 @@ Actuator.prototype.showBrowse = function(dataObj){
                             {display: "cuisine",id:"cuisine"},
                             {display: "language",id:"language"}
                             ];
-    this.build.buildMenu(browse_header,"browse-menu",dropdown_options,"visible","update-browse","name");
+    this.build.buildMenu(browse_header,"browse-menu",dropdown_options,"visible","update_browse","name");
     
     
     var content = this.build.makeElement(container,"Div","browse-content");
@@ -170,19 +170,19 @@ Actuator.prototype.showSidebar = function(){
     
     var browse_header = this.build.makeElement(sidebar_container,"Div","sidebar-header","","Browse By");
     this.build.makeElement(browse_header,"Div","sidebar-subhead","name","Alphabetical");
-    this.build.bindEventListener("name","update-browse","click");
+    this.build.bindEventListener("name","update_browse","click");
     this.build.makeElement(browse_header,"Div","sidebar-subhead","cuisine","Cuisine");
-    this.build.bindEventListener("cuisine","update-browse","click");
+    this.build.bindEventListener("cuisine","update_browse","click");
     this.build.makeElement(browse_header,"Div","sidebar-subhead","language","Language");
-    this.build.bindEventListener("language","update-browse","click");
+    this.build.bindEventListener("language","update_browse","click");
     this.build.makeElement(browse_header,"Div","sidebar-subhead","name","More");
-    this.build.bindEventListener("language","update-browse","click");
+    this.build.bindEventListener("language","update_browse","click");
     
     this.build.makeElement(sidebar_container,"Div","sidebar-header","name","Collections");
     this.build.makeElement(sidebar_container,"Div","sidebar-collections-container","");
     
     this.build.makeElement(sidebar_container,"Div","sidebar-header","search_advanced","Advanced Search");
-    this.build.bindEventListener("search_advanced","update-search","click");
+    this.build.bindEventListener("search_advanced","update_search","click");
     
     
     this.build.makeElement(sidebar_container,"Div","ad ad-sidebar","ad-sidebar");
@@ -198,7 +198,7 @@ Actuator.prototype.recentBar = function(data){
         //var recent_item = this.makeElement(recent_content,"Div","recent-item",recent,recent);
         var display_name = this.build.returnName(recent);
         var recent_image = this.build.makeImg(recent_content,recent,recent,"recent-image",display_name);
-        this.build.bindEventListener(recent,"show-full","click");
+        this.build.bindEventListener(recent,"show_full","click");
     }
 }
 
