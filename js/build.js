@@ -6,7 +6,6 @@ function Build(callback, isMobile){
     console.log("Building for mobile:  " + isMobile);
 }
 
-
 Build.prototype.buildResult = function(container, result, style){
     var name = result['name'][this.language][0];
         name = this.capitalize(name);
@@ -97,10 +96,16 @@ Build.prototype.makeFullResult = function(container,result,style,name){
     //MTC make ads
     
     var row2 = this.makeElement(result_container,"Div","block");
+        var result_description_label = this.makeElement(row2,"Div","result-header-"+style + " inline-wrap","","Description:");
+        this.makeMistakeReporter(result_description_label,"full",result.id);
+        var result_description = this.makeElement(row2,"Div","result-description-text-"+style,"",result.description);    
+    
         var result_class = this.makeElement(row2,"Div","result-header-" + style + " inline-wrap","","Class:");
-        this.appendList(result_class,result['classification'],"list-item-" + style,"click","show_full");
+        this.makeMistakeReporter(result_class,"full",result.id);
+        this.appendList(row2,result['classification'],"list-item-" + style,"click","run_search");
     
         var names_head = this.makeElement(row2,"Div","result-header-"+ style,"","Names:");
+        this.makeMistakeReporter(names_head,"full",result.id);
         for(var names_subhead in result.name){
             if(names_subhead == "scientific"){
                 var sub = this.makeElement(row2,"Div","result-label-" + style,"","Scientific Name:");
@@ -111,8 +116,11 @@ Build.prototype.makeFullResult = function(container,result,style,name){
                 this.appendList(lang_label,result['name'][names_subhead],"underline");
             }
         }
+    
         var result_form = this.makeElement(row2,"Div","result-header-" + style,"","Forms:");
+        this.makeMistakeReporter(result_form,"full",result.id);
         this.appendList(row2,result['form'],"list-item-" + style);
+        
         var cuisines_head = this.makeElement(row2,"Div","result-header-"+ style,"","Cuisines:");
         for(var cuisine_subhead in result.cuisine){
             var cuisine = this.capitalize(cuisine_subhead);
@@ -136,6 +144,14 @@ Build.prototype.makeFullResult = function(container,result,style,name){
     for(var i=0 ; i<4; i++){
         this.makeAd(ad_row,"ad-small",result.id);
     }
+}
+
+Build.prototype.makeMistakeReporter = function(container,style,target_item,target_data){
+    var id = "mistake-"+target_item+"_"+target_data;
+    var mistake_container = this.makeElement(container,"Div","dropdown mistake-container");
+    var button = this.makeElement(mistake_container,"Div","mistake-reporter-"+style,id,"<span class='glyphicons glyphicons-question-sign mistake-reporter mistake-reporter-full'></span>");
+    var content = this.makeElement(mistake_container,"Div","dropdown-content mistake-reporter-content",id,"See a mistake?");
+    var report_button = this.makeElement(content,"Button","mistake-reporter-submit",id,"<span class='glyphicons glyphicons-circle-arrow-right mistake-reporter-submit'>");
 }
 
 Build.prototype.makeAd = function(container,style,targetProduct){
@@ -180,8 +196,10 @@ Build.prototype.buildMenu = function(container,name,option_array,style,action,di
     var menu_content = this.makeElement(menu_container,"Div","dropdown-content");
     for(var i=0;i<option_array.length;i++){
         var menu_item = option_array[i];
+        console.log(menu_item.id);
         var menu_el = this.makeElement(menu_content,"Button",style + "-item", menu_item.id, menu_item.display);
-        this.bindEventListener(menu_item.id,action,"click");
+        var action_el = menu_item.action ? menu_item.action : action;
+        this.bindEventListener(menu_item.id,action_el,"click");
     }
 }
 
@@ -190,19 +208,20 @@ Build.prototype.appendList = function(container,array,style,event,action){
     for(var i=0;i<array.length;i++){
         var item = array[i];
         var id = this.returnID(item);
+        var name = this.returnName(item);
         //console.log(id);
-        this.makeElement(container,"Span",style,id,item);
+        this.makeElement(container,"Span",style,id,name);
         if(event){
             this.bindEventListener(id,action,event);
         }
     }
 }
 
-
 Build.prototype.bindEventListener = function(el_id,action,event){
     //console.log(el_id);
-    var id = this.getID(el_id);
     var el = document.querySelector("#"+el_id);
+    //console.log(el);
+    var id = this.getID(el_id); 
     var self = this;
     el.addEventListener(event,function(e){
         //console.log("click!");
@@ -226,6 +245,7 @@ Build.prototype.capitalize = function(string){
 
 Build.prototype.returnName = function(id){
     var name = id.replace("_", " ");
+    name = this.capitalize(name);
     return name;
 }
 

@@ -1,5 +1,7 @@
-function SearchManager(){
+function SearchManager(updateAcuatorCallback){
     console.log("Search Manager running!");
+    this.updateActuatorCallback = updateAcuatorCallback;
+    
     this.searchBy = "search_by_name";
     this.searchText = "";
     this.searchByOptions = [{display: "search by name",id:"search_by_name"}, 
@@ -14,6 +16,7 @@ function SearchManager(){
     this.browsingBy = "name";
     this.browsePosition = 0;
     this.searchCriteria = {
+        text: "",
         form: [],
         language: [],
         cuisine: [],
@@ -26,18 +29,40 @@ function SearchManager(){
     this.awake();
 }
 
+//can be deleted in it's entirety once db is working
 SearchManager.prototype.awake = function(){
     //most of this can probably be done by the database
     var data = this.data;
     var searchData = {};
     for(var category in this.searchCriteria){
-        if(!searchData[category]){
-            searchData[category] = [];
-        }
-        for(var i in this.data){
-            
+        if(category != "name"){
+            if(!searchData[category]){
+                searchData[category] = [];
+            }
+            for(var i in data){
+                if(data[i][category]){
+                    if(category == "cuisine"){
+                        for(var c in data[i][category]){
+                            var test = searchData[category].indexOf(c);
+                            if(test == -1){
+                                searchData[category].push(c);
+                            }
+                        }
+                    } else {
+                       for(var x = 0; x < data[i][category].length;x++){
+                            var item = data[i][category][x];
+                            var test = searchData[category].indexOf(item);
+                            if(test == -1){
+                                searchData[category].push(item);
+                            }
+                        } 
+                    }
+                }
+            }
         }
     }
+    console.log(searchData);
+    this.searchData = searchData;
 }
 
 SearchManager.prototype.showRandom = function(){
@@ -161,11 +186,16 @@ SearchManager.prototype.failSafeFakeSearch = function(searchTerm){
 
 SearchManager.prototype.updateSearchText = function(searchText){
     this.searchText = searchText;
-    console.log(this.searchText);
+    this.searchCriteria.text = searchText;
+    console.log(this.searchCriteria.text);
 }
 
-SearchManager.prototype.updateSearchParameters = function(searchParameters){
-    console.log(searchParameters);
+SearchManager.prototype.updateSearchCriteria = function(critera,newData){
+    console.log(critera);
+    console.log(newData);
+    this.searchCriteria[critera].push(newData);
+    console.log(this.searchCriteria);
+    this.updateActuatorCallback();
 }
 
 SearchManager.prototype.test = function(word1,word2){

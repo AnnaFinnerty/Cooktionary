@@ -6,14 +6,7 @@ function Actuator(data){
     this.content = document.querySelector('.content');
     this.showing = "big-search";
     this.result_type = "expanded";
-    this.language = data.language;
-    this.collections = data.collections;
-    this.searchCriteria = data.searchCriteria;
-    this.searchByOptions = data.searchByOptions;
-    this.browseCategories = data.browseCategories;
-    this.searchingBy = data.searchingBy;
-    this.browsingBy = data.browsingBy;
-    this.incentives = data.incentives;
+    
     this.acuator_data = data;
     
     this.events = {};
@@ -22,33 +15,43 @@ function Actuator(data){
 
 Actuator.prototype.awake = function(){
     var logo = document.querySelector(".logo");
-    this.build.bindEventListener("clean_search","change_page","click");
+    
+    this.build.bindEventListener("logo-clean_search","change_page","click");
     var logo_container = this.build.makeElement(logo,"Div","logo-container inline");
     var icons = ["fennel_bulb","tomato","dragonfruit"];
-    var icon = icons[Math.floor(Math.random()*icons.length)];
+    var icons2 = [{id:"fennel_bulb",width:"10vw",height:"10vh"},
+                  {id:"tomato",width:"5vw",height:"5vw"},
+                  {id:"dragonfruit",width:"10vw",height:"10vh"}];
+    var icon = icons2[Math.floor(Math.random()*icons2.length)];
     
     // add icon
-    
-    var bwImg = this.build.makeImg(logo_container,"logos/"+icon+"-bw","","logo-item");
-    this.build.makeImg(bwImg,"logos/"+icon+"-color",icon,"logo-item fade-out");
-    var added = document.querySelector("#"+icon);
-        added.addEventListener("mouseover",function(){
+    var id = "icon-" + icon.id + "";
+    var bwImg = this.build.makeImg(logo_container,"logos/"+icon.id+"-bw","","logo-item");
+        bwImg.style.height = icon.height;
+        bwImg.style.width = icon.width;
+    var cImg = this.build.makeImg(bwImg,"logos/"+icon.id+"-color",id,"logo-item fade-out");
+        cImg.style.width = icon.width;
+        cImg.style.height = icon.height;
+    var added = document.querySelector("#"+id+"");
+    added.addEventListener("mouseover",function(){
             this.className = "logo-item fade-in";
         })
-        added.addEventListener("mouseout",function(){
+    added.addEventListener("mouseout",function(){
             this.className = "logo-item fade-out";
         })
-    this.build.bindEventListener(icon,"logo-hover","mouseover");
+
+    this.build.bindEventListener(id,"show_full","click");
     
     var header_dropdown_options = [{display: "search",id:"clean_search"}, 
-                                   {display: "browse",id:"browse"},
+                                   {display: "browse",id:"browse",action:"update_browse"},
                                    {display: "blog",id:"blog"}
                                   ];
     var container = document.querySelector(".header");
     this.build.buildMenu(container,"menu-button",header_dropdown_options,"menu-button","change_page","<span class='glyphicons glyphicons-menu-hamburger icon'></span>");
 }
 
-Actuator.prototype.actuate = function(page,data){
+Actuator.prototype.actuate = function(page,data,actuator_data){
+    this.acuator_data = actuator_data;
     this.clearContainer(this.content);
     console.log(data);
     switch(page){
@@ -73,6 +76,7 @@ Actuator.prototype.actuate = function(page,data){
             break
             
         case "blog":
+            this.showSidebar();
             this.showBlog(data);
             break;
             
@@ -103,8 +107,6 @@ Actuator.prototype.showFull = function(request){
 }
 
 Actuator.prototype.showCleanSearch = function(searchOptions){
-    console.log(this.searchingBy);
-    console.log(this.searchByOptions);
     var container = this.build.makeElement(this.content,"Div","big-search-container");
     var searchbar = this.build.makeSearchBar(container,"big-search");
     this.build.buildMenu(container,this.acuator_data.searchingBy,this.acuator_data.searchByOptions,"search-options","update_search","options");
@@ -113,14 +115,30 @@ Actuator.prototype.showCleanSearch = function(searchOptions){
 
 Actuator.prototype.showAdvancedSearch = function(){
     console.log("Showing Advanced Search");
-    var search_criteria = this.searchCriteria;
-    
-    var container = this.build.makeElement(this.content,"Div","advanced-search-container");
-    var controls_container = this.build.makeElement(container,"Div","");
-    for(var criterium in search_criteria){
-        this.build.makeElement(controls_container,"Div","search-criteria-label","",criterium);
+    var search_criteria = this.acuator_data.searchCriteria;
+    var search_data = this.acuator_data.searchData;
+    var controls_container = this.build.makeElement(this.content,"Div","advanced-search-container inline-wrap");
+    for(var criterium in search_data){
+        if(criterium != "text"){
+            var label = this.build.makeElement(controls_container,"Div","search-criteria-label","",criterium);
+            var display_options = [];
+            var first_entry;
+            if(search_data[criterium].length){
+                for(var i = 0;i<search_data[criterium].length;i++){
+                    var item = search_data[criterium][i];
+                    var obj = {};
+                    obj['display'] = this.build.capitalize(this.build.returnName(item));
+                    obj['id'] = criterium + "_" + item;
+                    display_options.push(obj)
+                }
+            this.build.buildMenu(label,criterium,display_options,"advanced-select","update_search","<span class='glyphicons glyphicons-plus-sign advanced-select-menu icon'></span>");
+            }
+            console.log(display_options);
+            
+        }
     }
     var results_container = this.build.makeElement(this.content,"Div","advanced-search-results-container");
+     var search_terms_container = this.build.makeElement(results_container,"Div","search-terms-container");
 }
 
 Actuator.prototype.showBrowse = function(dataObj){
@@ -160,13 +178,16 @@ Actuator.prototype.showBrowse = function(dataObj){
 }
 
 Actuator.prototype.showBlog = function(){
-    this.build.makeElement(this.content, "Div","blog-header","","blog");
+    
     var container = this.build.makeElement(this.content,"Div","blog-container","");
+    this.build.makeElement(container, "Div","blog-header","","blog");
 }
-
 
 Actuator.prototype.showSidebar = function(){
     var sidebar_container = this.build.makeElement(this.content,"Div","sidebar-container");
+    
+    var random_button = this.build.makeElement(sidebar_container,"Button","siderbar-random-button","sidebar-show_random","RANDOM");
+    this.build.bindEventListener("sidebar-show_random","update_search","click");
     
     var browse_header = this.build.makeElement(sidebar_container,"Div","sidebar-header","","Browse By");
     this.build.makeElement(browse_header,"Div","sidebar-subhead","name","Alphabetical");
@@ -178,16 +199,16 @@ Actuator.prototype.showSidebar = function(){
     this.build.makeElement(browse_header,"Div","sidebar-subhead","name","More");
     this.build.bindEventListener("language","update_browse","click");
     
-    this.build.makeElement(sidebar_container,"Div","sidebar-header","name","Collections");
+    this.build.makeElement(sidebar_container,"Div","sidebar-header hover","name","Collections");
     this.build.makeElement(sidebar_container,"Div","sidebar-collections-container","");
     
-    this.build.makeElement(sidebar_container,"Div","sidebar-header","search_advanced","Advanced Search");
-    this.build.bindEventListener("search_advanced","update_search","click");
+    this.build.makeSearchBar(sidebar_container,"sidebar-search");
+    this.build.makeElement(sidebar_container,"Button","sidebar-button","sidebar-search_advanced","ADVANCED")
+    this.build.bindEventListener("sidebar-search_advanced","update_search","click");
     
     
     this.build.makeElement(sidebar_container,"Div","ad ad-sidebar","ad-sidebar");
 }
-
 
 Actuator.prototype.recentBar = function(data){
     //needs to be refocused to something else
@@ -202,10 +223,18 @@ Actuator.prototype.recentBar = function(data){
     }
 }
 
+Actuator.prototype.updateData = function(newData){
+    console.log(newData);
+    this.acuator_data = newData;
+}
+
 Actuator.prototype.updateResults = function(container_id,new_results){
     
 }
 
+Actuator.prototype.toggleHeader = function(){
+    
+}
 
 Actuator.prototype.on = function (event, callback) {
   if (!this.events[event]) {

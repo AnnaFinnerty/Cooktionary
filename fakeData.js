@@ -3,6 +3,7 @@ var fakeData = {
         id: "fennel_bulb",
         color: "green",
         classification: ["vegetable"],
+        description: "test",
         form:["root","vegetable","fresh"],
         name: {
             scientific: "",
@@ -11,8 +12,8 @@ var fakeData = {
         },
         cuisine:{
             chinese: {
-                dishes:["char siu"],
-                other:["five spice powder"]
+                dishes:["char_siu"],
+                other:["five_spice_powder"]
             }
         },
         similiar: ["cumin"],
@@ -22,6 +23,7 @@ var fakeData = {
         id: "tomato",
         color: "red",
         classification: ["vegetable"],
+        description: "test",
         form:["vegetable","fresh"],
         name: {
             scientific: "",
@@ -30,7 +32,7 @@ var fakeData = {
         },
         cuisine:{
             italian: {
-                dishes:["pasta sauce"],
+                dishes:["pasta_sauce"],
                 other:[]
             }
         },
@@ -41,6 +43,7 @@ var fakeData = {
         id: "anise",
         color: "darkgreen",
         classification: ["spice"],
+        description: "test",
         form:["whole","ground"],
         name: {
             scientific: "",
@@ -48,17 +51,18 @@ var fakeData = {
         },
         cuisine:{
             italian: {
-                dishes:["char siu"],
-                other:["five spice powder"]
+                dishes:["char_siu"],
+                other:["five_spice_powder"]
             }
         },
-        similiar: ["fennel seed","anise seed"],
-        mistaken: ["star_anise","fennel seed"],
+        similiar: ["fennel_seed","anise"],
+        mistaken: ["star_anise","fennel_seed"],
     },
     star_anise: {
         id: "star_anise",
         color: "saddlebrown",
         classification: ["spice"],
+        description: "test",
         form:["whole"],
         name: {
             scientific: "",
@@ -67,17 +71,18 @@ var fakeData = {
         },
         cuisine:{
             chinese: {
-                dishes:["char siu"],
-                other:["five spice powder"]
+                dishes:["char_siu"],
+                other:["five_spice_powder"]
             }
         },
-        similiar: ["fennel seed","aniseed"],
+        similiar: ["fennel_seed","aniseed"],
         mistaken: ["anise","fennel"],
     },
     cinnamon: {
         id: "cinnamon",
         color: "brown",
         classification: ["spice"],
+        description: "test",
         form:["whole","ground"],
         name: {
             scientific: "",
@@ -86,8 +91,8 @@ var fakeData = {
         },
         cuisine:{
             chinese: {
-                dishes:["char siu"],
-                other:["five spice powder"]
+                dishes:["char_siu"],
+                other:["five_spice_powder"]
             }
         },
         similiar: ["cumin"],
@@ -97,16 +102,17 @@ var fakeData = {
         id: "fennel_seed",
         color: "lightgreen",
         classification: ["spice"],
+        description: "test",
         form:["whole","ground","mixes"],
         name: {
             scientific: "",
-            english: ["fennel seed"],
+            english: ["fennel_seed"],
             spanish: ["canela"]
         },
         cuisine:{
             chinese: {
-                dishes:["char siu"],
-                other:["five spice powder"]
+                dishes:["char_siu"],
+                other:["five_spice_powder"]
             }
         },
         similiar: ["cumin"],

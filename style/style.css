@@ -64,6 +64,7 @@ span{
 
 .menu-button:hover{
     background: rgb(245,245,205);
+    text-decoration: underline;
 }
 
 .menu-button-item{
@@ -98,6 +99,7 @@ span{
 
 .sidebar-header{
     font-size: 4vh;
+    margin-top: 1vh;
 }
 
 .sidebar-header-mobile{
@@ -106,7 +108,7 @@ span{
 
 .sidebar-subhead{
     font-size: 3vh;
-    background: white;
+    background: rgb(245,245,245);
     border: 1px solid dimgray;
     border-top-right-radius: 2px;
     border-bottom-right-radius: 2px;
@@ -152,9 +154,21 @@ span{
     
 }
 
+.sidebar-search{
+     width: 15vw;
+     height: 3.5vw;
+     font-size: 3vh;
+     line-height: 3.5vh;
+}
+
 .search-options{
     margin-left: 33vw;
     margin-top: -1vh;
+}
+
+.search-options-item:hover{
+    text-decoration: underline;
+    background: rgb(245,245,205);
 }
 
 /*Advanced Search*/
@@ -175,14 +189,29 @@ span{
 .advanced-search-results-container{
     background: rgb(253,253,255);
     margin-top: 8vh;
-    transform: translate(20vw,-80.5vh);
+    transform: translate(20vw,-90.5vh);
     border: 2px solid dimgray;
     border-radius: 2px;
-    height: 40vh;
+    height: 65vh;
     width: 80vw;
     padding: 1vw;
     padding-left: 2vw;
     overflow: scroll;
+}
+
+.search-terms-container{
+    height: 10vh;
+    width: 78vw;
+    border: 2px solid dimgray;
+    border-radius: 2px;
+}
+
+.search-criteria-label{
+  line-height: 5vw;
+}
+
+.advanced-select-menu{
+    
 }
 
 /*RESULTS*/
@@ -291,10 +320,12 @@ span{
 }
 
 .list-item-full{
+    background: beige;
     font-size: 3vh;
     border: 1px solid black;
     padding: .5vh;
     margin: 1vh;
+    box-shadow: 1px 1px 1px 1px transparent;
 }
 
 .list-item-full-mobile{
@@ -306,6 +337,14 @@ span{
 
 .list-item-full:hover{
     background: rgb(245,245,170);
+    border: 1px solid dimgray;
+    box-shadow: 1px 1px 1px 1px rgba(0,0,0,.5);
+}
+
+.result-description-text-full{
+    width: 100%;
+    font-size: 4vh;
+    padding: 3vw;
 }
 
 /*BROWSE*/
@@ -365,7 +404,7 @@ span{
 
 .recent-container{
     width: 110vw;
-    height: 20vw;
+    height: 22vw;
     margin-top: 23vh;
     margin-left: -10vw;
     padding-left: 10vw;
@@ -382,6 +421,7 @@ span{
     width: 20vw;
     border: 3px solid lightgray;
     margin-left: 1vw;
+    background: dimgray;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -392,17 +432,9 @@ span{
 }
 
 .recent-image:hover{
-    height: 20vw;
-    width: 20vw;
     border: 3px solid dimgray;
-    margin-left: 1vw;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    text-align: right;
-    font-size: 4vh;
     color: goldenrod;
-    border-radius: 1vw;
+    box-shadow: 1px 1px 2px 2px rgba(0,0,0,.5);
 }
 
 
@@ -410,6 +442,26 @@ span{
 .recent-label{
     font-size: 4vh;
     color: aliceblue;
+}
+
+/*ERROR REPORTING*/
+
+.mistake-reporter-full{
+    margin-left: -.5vw;
+    margin-top: -.5vh;
+    font-size: 2vh;
+}
+
+.mistake-reporter-content{
+    font-size: 3vh;
+    padding: 1vw;
+    background: 1px solid lightblue;
+}
+
+/*Blog*/
+
+.blog-header{
+    font-size: 6vh;
 }
 
 /*ADVERTISINGs*/
@@ -437,6 +489,10 @@ span{
 
 /*MISC*/
 
+.hover:hover{
+    background: rgb(245,245,205);
+}
+
 .icon{
     text-shadow: 1px 1px goldenrod;
 }
@@ -447,9 +503,9 @@ span{
 }
 
 .dropdown{
-    width: 30vw;
     position: relative;
     display: inline-block;
+    width: 15vw;
 }
 
 .dropbtn {
@@ -465,7 +521,7 @@ span{
     display: none;
     position: absolute;
     background-color: #f9f9f9;
-    min-width: 160px;
+    min-width: 15vw;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
 }
