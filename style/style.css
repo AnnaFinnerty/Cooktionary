@@ -28,10 +28,15 @@ span{
 }
 
 .logo{
-    width: 100vw;
     height: 10vh;
     text-shadow: 1px 1px goldenrod;
     cursor: pointer;
+}
+
+.logo-side{
+    background: white;
+    font-size: 10vh;
+    text-align: left;
 }
 
 .logo-container{
@@ -100,6 +105,7 @@ span{
 .sidebar-header{
     font-size: 4vh;
     margin-top: 1vh;
+    padding-left: 1vw;
 }
 
 .sidebar-header-mobile{
@@ -122,6 +128,59 @@ span{
 
 .sidebar-subhead:hover{
     background: rgb(245,245,205); 
+    box-shadow: inset 0px 0px 1px 1px rgba(0,0,0,.3);
+}
+
+.sidebar-random-button{
+    border: 1px solid black;
+    height: 4vw;
+    font-size: 3vw;
+    line-height: 4vw;
+    width: 95%;
+    margin-left: 2.4%;
+    background: rgb(230,230,230);
+    box-shadow: inset 0px 0px 1px 1px rgba(0,0,0,.1);
+    border-radius: 5px;
+}
+
+.sidebar-random-button:hover{
+    background: lightblue;
+    box-shadow: inset 0px 0px 1px 1px rgba(0,0,0,.3);
+}
+
+.collections-container{
+    border: 2px solid dimgray;
+    background: white;
+    margin: .5vw;
+    padding: .1vw;
+    height: 20vh;
+}
+
+.collection-item{
+    font-weight: 800;
+    background: beige;
+    font-size: 2.5vh;
+    height: 3.2vh;
+    padding: .1vh;
+    line-height: 3.2vh;
+    border: 1px solid black;
+    margin: .5vw;
+    box-shadow: 1px 1px 1px 1px transparent, inset 0px 0px 1px 1px rgba(0,0,0,.2);
+}
+
+
+.collection-item-mobile{
+    font-size: 2vh;
+    border: 1px solid black;
+    padding: .2vw;
+    margin: .5vw;
+    box-shadow: 1px 1px 1px 1px transparent;
+}
+
+.collection-item:hover{
+    background: rgb(245,245,170);
+    border: 1px solid dimgray;
+    box-shadow: 1px 1px 1px 1px rgba(0,0,0,.5), inset 0px 0px 1px 1px rgba(0,0,0,.1);
 }
 
 /*SEARCH*/
@@ -487,6 +546,10 @@ span{
     height: 20vw;
 }
 
+.ad-full{
+    width: 20vw;
+    height: 20vw;
+}
 /*MISC*/
 
 .hover:hover{

@@ -4,23 +4,24 @@ function StorageManager(updatePageCallback){
     this.recent = [];
     this.incentives = fakeData;
     this.listen();
+    this.pagecount = 1;
 }
 
 StorageManager.prototype.listen = function(){
     var self = this;
     window.onpopstate = function(event) {
-        //alert("location: " + document.location + ", state: " + JSON.stringify(event.state));
+        console.log("updating page history")
+        console.log("location: " + document.location + ", state: " + JSON.stringify(event.state));
         var page = "" + document.location + "";
         self.newPage(page);
     };
 }
 
 StorageManager.prototype.updateHistory = function(page,id){
-    console.log("Updating history");
     var pagename = id ? "#" + page + "/" + id : "#" + page;
-    history.pushState(null,null,pagename);
+    history.pushState({page: this.pagecount},null,pagename);
+    this.pagecount++;
     this.recent.push(pagename);
-    console.log(this.recent);
 }
 
 StorageManager.prototype.newPage = function(pagename){

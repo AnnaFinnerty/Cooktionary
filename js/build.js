@@ -90,10 +90,9 @@ Build.prototype.makeFullResult = function(container,result,style,name){
     var result_container = this.makeElement(container,"Div","result-item-"+ style + " inline",result.id,"");
     var row1 = this.makeElement(result_container,"Div","full-image-row inline-block");
     var result_image = this.makeImg(row1,result.id,result.id,"result-image-"+ style);
-    for(var i=0 ; i<5; i++){
-        this.makeAd(row1,"ad-sidebar",result.id);
+    for(var i=0 ; i<4; i++){
+        this.makeAd(row1,"ad-full",result.id);
     }
-    //MTC make ads
     
     var row2 = this.makeElement(result_container,"Div","block");
         var result_description_label = this.makeElement(row2,"Div","result-header-"+style + " inline-wrap","","Description:");
@@ -196,7 +195,7 @@ Build.prototype.buildMenu = function(container,name,option_array,style,action,di
     var menu_content = this.makeElement(menu_container,"Div","dropdown-content");
     for(var i=0;i<option_array.length;i++){
         var menu_item = option_array[i];
-        console.log(menu_item.id);
+        //console.log(menu_item.id);
         var menu_el = this.makeElement(menu_content,"Button",style + "-item", menu_item.id, menu_item.display);
         var action_el = menu_item.action ? menu_item.action : action;
         this.bindEventListener(menu_item.id,action_el,"click");

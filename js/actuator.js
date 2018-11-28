@@ -14,10 +14,10 @@ function Actuator(data){
 }
 
 Actuator.prototype.awake = function(){
-    var logo = document.querySelector(".logo");
+    this.logo = document.querySelector(".logo");
     
     this.build.bindEventListener("logo-clean_search","change_page","click");
-    var logo_container = this.build.makeElement(logo,"Div","logo-container inline");
+    var logo_container = this.build.makeElement(this.logo,"Div","logo-container inline");
     var icons = ["fennel_bulb","tomato","dragonfruit"];
     var icons2 = [{id:"fennel_bulb",width:"10vw",height:"10vh"},
                   {id:"tomato",width:"5vw",height:"5vw"},
@@ -54,6 +54,16 @@ Actuator.prototype.actuate = function(page,data,actuator_data){
     this.acuator_data = actuator_data;
     this.clearContainer(this.content);
     console.log(data);
+    //check to see if logo needs to be adjusted
+    var logo_style = this.logo.className;
+    console.log(page);
+    if(page != "clean_search" && logo_style == "logo"){
+        this.logo.className = "logo-side"
+    } else {
+        if(logo_style == "logo-side"){
+            this.logo.className = "logo"
+        }
+    }
     switch(page){
         case "results":
             this.showSidebar();
@@ -186,7 +196,7 @@ Actuator.prototype.showBlog = function(){
 Actuator.prototype.showSidebar = function(){
     var sidebar_container = this.build.makeElement(this.content,"Div","sidebar-container");
     
-    var random_button = this.build.makeElement(sidebar_container,"Button","siderbar-random-button","sidebar-show_random","RANDOM");
+    var random_button = this.build.makeElement(sidebar_container,"Button","sidebar-random-button","sidebar-show_random","RANDOM");
     this.build.bindEventListener("sidebar-show_random","update_search","click");
     
     var browse_header = this.build.makeElement(sidebar_container,"Div","sidebar-header","","Browse By");
@@ -201,6 +211,14 @@ Actuator.prototype.showSidebar = function(){
     
     this.build.makeElement(sidebar_container,"Div","sidebar-header hover","name","Collections");
     this.build.makeElement(sidebar_container,"Div","sidebar-collections-container","");
+    console.log(this.acuator_data.collections);
+    var collections_container = this.build.makeElement(sidebar_container,"Div","collections-container inline-wrap");
+    var collections = this.acuator_data.collections;
+    for(var i=0;i<collections.length;i++){
+        var obj = collections[i];
+        console.log(obj);
+        var collection = this.build.makeElement(collections_container, "Div", "collection-item", "", obj.display);
+    }
     
     this.build.makeSearchBar(sidebar_container,"sidebar-search");
     this.build.makeElement(sidebar_container,"Button","sidebar-button","sidebar-search_advanced","ADVANCED")
@@ -232,8 +250,14 @@ Actuator.prototype.updateResults = function(container_id,new_results){
     
 }
 
-Actuator.prototype.toggleHeader = function(){
-    
+Actuator.prototype.toggleHeader = function(headerCenter){
+    console.log("toggling header!");
+    if(true){
+        this.logo.className = "logo";
+    } else {
+        this.logo.className = "logo-side";
+        console.log("building top info!");
+    }
 }
 
 Actuator.prototype.on = function (event, callback) {

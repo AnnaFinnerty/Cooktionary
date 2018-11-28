@@ -106,7 +106,7 @@ var fakeData = {
         form:["whole","ground","mixes"],
         name: {
             scientific: "",
-            english: ["fennel_seed"],
+            english: ["fennel seed"],
             spanish: ["canela"]
         },
         cuisine:{
