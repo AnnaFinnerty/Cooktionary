@@ -14,9 +14,9 @@ function Actuator(data){
 }
 
 Actuator.prototype.awake = function(){
-    this.logo = document.querySelector(".logo");
+    this.logo = document.querySelector("#logo");
     
-    this.build.bindEventListener("logo-clean_search","change_page","click");
+    this.build.bindEventListener("logo","change_page","click");
     var logo_container = this.build.makeElement(this.logo,"Div","logo-container inline");
     var icons = ["fennel_bulb","tomato","dragonfruit"];
     var icons2 = [{id:"fennel_bulb",width:"10vw",height:"10vh"},
@@ -24,9 +24,10 @@ Actuator.prototype.awake = function(){
                   {id:"dragonfruit",width:"10vw",height:"10vh"}];
     var icon = icons2[Math.floor(Math.random()*icons2.length)];
     
-    // add icon
+    // add random icon
+    var header = document.querySelector(".header");
     var id = "icon-" + icon.id + "";
-    var bwImg = this.build.makeImg(logo_container,"logos/"+icon.id+"-bw","","logo-item");
+    var bwImg = this.build.makeImg(header,"logos/"+icon.id+"-bw","","logo-item");
         bwImg.style.height = icon.height;
         bwImg.style.width = icon.width;
     var cImg = this.build.makeImg(bwImg,"logos/"+icon.id+"-color",id,"logo-item fade-out");
@@ -55,15 +56,7 @@ Actuator.prototype.actuate = function(page,data,actuator_data){
     this.clearContainer(this.content);
     console.log(data);
     //check to see if logo needs to be adjusted
-    var logo_style = this.logo.className;
-    console.log(page);
-    if(page != "clean_search" && logo_style == "logo"){
-        this.logo.className = "logo-side"
-    } else {
-        if(logo_style == "logo-side"){
-            this.logo.className = "logo"
-        }
-    }
+    this.toggleHeader(page);
     switch(page){
         case "results":
             this.showSidebar();
@@ -250,13 +243,15 @@ Actuator.prototype.updateResults = function(container_id,new_results){
     
 }
 
-Actuator.prototype.toggleHeader = function(headerCenter){
+Actuator.prototype.toggleHeader = function(page){
     console.log("toggling header!");
-    if(true){
-        this.logo.className = "logo";
+    var logo_style = this.logo.className;
+    if(page != "clean_search" && logo_style == "logo-center"){
+        this.logo.className = "logo-side"
     } else {
-        this.logo.className = "logo-side";
-        console.log("building top info!");
+        if(logo_style == "logo-side"){
+            this.logo.className = "logo-center"
+        }
     }
 }
 

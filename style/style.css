@@ -27,16 +27,25 @@ span{
     height: 14vh;
 }
 
-.logo{
+.logo-center{
+    font-family: 'KoHo', sans-serif;
+    font-size: 8vw;
+    margin-left: 30vw;
     height: 10vh;
     text-shadow: 1px 1px goldenrod;
     cursor: pointer;
 }
 
 .logo-side{
-    background: white;
-    font-size: 10vh;
-    text-align: left;
+    width: 30vw;
+    margin-top: 3vh;
+    margin-left: 2vw;
+    font-size: 5vw;
+}
+
+#logo:hover{
+    color: goldenrod;
+    text-shadow: 2px 2px black;
 }
 
 .logo-container{
@@ -49,17 +58,6 @@ span{
     background-size: contain;
     background-repeat: no-repeat;
     margin: 0vw;
-}
-
-.title{
-    font-family: 'KoHo', sans-serif;
-    font-size: 8vw;
-    margin-left: 30vw;
-}
-
-.title:hover{
-    color: goldenrod;
-    text-shadow: 2px 2px black;
 }
 
 .menu-button{
@@ -98,7 +96,7 @@ span{
 .sidebar-container{
     width: 20vw;
     margin: 0;
-    margin-top: 5vh;
+    margin-top: 0vh;
     height: 72.5vh;
 }
 
@@ -281,7 +279,7 @@ span{
     transform: translate(20vw,-80.5vh);
     border: 2px solid dimgray;
     border-radius: 2px;
-    height: 80vh;
+    height: 86vh;
     width: 80vw;
     padding: 1vw;
     padding-left: 2vw;
