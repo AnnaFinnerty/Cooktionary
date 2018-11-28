@@ -128,9 +128,9 @@ App.prototype.quickSearch = function(criteria){
     console.log(criteria);
 }
 
-App.prototype.runSearch = function(){
+App.prototype.runSearch = function(field,data){
     console.log("running search!");
-    
+    console.log(field,data);
     var self = this;
     var promise = new Promise(function(resolve, reject) {
       var results = self.searchManager.search();    
