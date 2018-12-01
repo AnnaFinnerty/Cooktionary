@@ -59,6 +59,7 @@ span{
     align-items: baseline;
     position: relative;
     width: 5vw;
+    margin-bottom: 2vh;
 }
 
 .logo-item{
@@ -67,11 +68,12 @@ span{
     background-position: bottom;
     position: absolute;
     left: 0;
+    bottom: 0;
 }
 
 .logo-item-side{
-    max-width: 3vw;
-    max-height: 5vh;
+    max-width: 5vw;
+    max-height: 7vh;
 }
 .toggle-buttons-full{
     width: 10vw;
@@ -86,6 +88,7 @@ span{
 }
 
 .sidebar-random-button{
+    
     border: 1px solid dimgray;
     height: 4.5vh;
     line-height: 4.5vh;
@@ -94,6 +97,7 @@ span{
     background: rgb(230,230,230);
     box-shadow: inset 0px 0px 1px 1px rgba(0,0,0,.1);
     border-radius: 50%;
+    margin-right: 2vw;
 }
 
 .sidebar-random-button:hover{
@@ -252,7 +256,7 @@ span{
 }
 
 .sidebar-search{
-     width: 20vw;
+     width: 25vw;
      height: 3.5vw;
      font-size: 3vh;
      line-height: 3.5vh;
@@ -316,7 +320,7 @@ span{
 .results-container,.full-container,.browse-container,.blog-container{
     background: rgb(253,253,255);
     margin-top: 8vh;
-    transform: translate(20vw,-80.5vh);
+    transform: translate(1vw,-2vh);
     border: 2px solid dimgray;
     border-radius: 2px;
     height: 86vh;
@@ -406,7 +410,7 @@ span{
 
 .result-label-full-mobile{
     vertical-align: middle;
-    font-size: 3vh;
+    font-size: 3vw;
     margin: 1vh;
 }
 

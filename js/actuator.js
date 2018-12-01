@@ -9,107 +9,52 @@ function Actuator(data){
     
     this.acuator_data = data;
     
+    this.header = new Header(this.build);
+    this.sidebar = new Sidebar(this.build, this.acuator_data.collections);
+    
+    
     this.current_page;
     this.current_data;
     
     this.events = {};
-    this.awake();
-}
-
-Actuator.prototype.awake = function(){
-    
-    // Build the header
-    var header = document.querySelector(".header");
-    this.logo = document.querySelector("#logo-clean_search");
-    this.build.bindEventListener("logo-clean_search","change_page","click");
-    
-    this.toggleButtons = document.querySelector(".toggle-buttons");
-    
-    this.build.makeSearchBar(this.toggleButtons,"sidebar-search");
-    var random_button = this.build.makeElement(this.toggleButtons,"Button","sidebar-random-button","sidebar-show_random","<span class='glyphicons glyphicons-rabbit icon random-icon'></span>");
-    this.build.bindEventListener("sidebar-show_random","update_search","click");
-    
-    
-    
-    //this.build.makeElement(this.toggleButtons,"Button","sidebar-button","sidebar-search_advanced","ADVANCED");
-    //this.build.bindEventListener("sidebar-search_advanced","update_search","click");
-    
-    
-    
-    var icon_container = document.querySelector(".icon-container");
-    var icons = [{id:"fennel_bulb",width:"5vw",height:"10vh"},
-                  {id:"tomato",width:"6vw",height:"5vw"},
-                  {id:"dragonfruit",width:"6vw",height:"10vh"},
-                  {id:"megrim",width:"10vw",height:"10vh"},
-                 ];
-    var icon = icons[Math.floor(Math.random()*icons.length)];
-    
-    // add random icon
-    
-    var id = "icon-" + icon.id + "";
-    var bwImg = this.build.makeImg(icon_container,"logos/"+icon.id+"-bw","","logo-item");
-        bwImg.style.height = icon.height;
-        bwImg.style.width = icon.width;
-    var cImg = this.build.makeImg(bwImg,"logos/"+icon.id+"-color",id,"logo-item fade-out");
-        cImg.style.width = icon.width;
-        cImg.style.height = icon.height;
-    
-    
-    var added = document.querySelector("#"+id+"");
-    added.addEventListener("mouseover",function(){
-            this.className = "logo-item fade-in";
-        })
-    added.addEventListener("mouseout",function(){
-            this.className = "logo-item fade-out";
-        })
-
-    this.bwImg = bwImg;
-    this.cImg = cImg;
-    
-    this.build.bindEventListener(id,"show_full","click");
-    
-    var header_dropdown_options = [{display: "search",id:"clean_search"}, 
-                                   {display: "browse",id:"browse",action:"update_browse"},
-                                   {display: "blog",id:"blog"}
-                                  ];
-    var container = document.querySelector(".header");
-    this.build.buildMenu(container,"menu-button",header_dropdown_options,"menu-button","change_page","<span class='glyphicons glyphicons-menu-hamburger icon'></span>");
 }
 
 Actuator.prototype.actuate = function(page,data,actuator_data){
     this.acuator_data = actuator_data;
     this.clearContainer(this.content);
     console.log(data);
+    
     //check to see if logo needs to be adjusted
-    this.toggleHeader(page);
+    this.header.toggleHeader(page);
+    
     switch(page){
         case "results":
-            this.showSidebar();
+            this.sidebar.showSidebar();
             this.showSearchResults(data);
             break;
          
         case "full": 
-            this.showSidebar();
+            this.sidebar.showSidebar();
             this.showFull(data);
             break
             
         case "browse": 
-            this.showSidebar();
+            this.sidebar.showSidebar();
             this.showBrowse(data);
             break
             
         case "advanced": 
-            this.showSidebar();
+            this.sidebar.showSidebar();
             this.showAdvancedSearch(data);
             break
             
         case "blog":
-            this.showSidebar();
+            this.sidebar.showSidebar();
             this.showBlog(data);
             break;
             
         default:            // big-search
-            //this.showSidebar();
+            this.sidebar.hideSidebar();
             this.showCleanSearch(data);
             break;
     }
@@ -210,35 +155,6 @@ Actuator.prototype.showBlog = function(){
     this.build.makeElement(container, "Div","blog-header","","blog");
 }
 
-Actuator.prototype.showSidebar = function(){
-    var sidebar_container = this.build.makeElement(this.content,"Div","sidebar-container");
-    
-    var browse_header = this.build.makeElement(sidebar_container,"Div","sidebar-header","","Browse By");
-    this.build.makeElement(browse_header,"Div","sidebar-subhead","name","Alphabetical");
-    this.build.bindEventListener("name","update_browse","click");
-    this.build.makeElement(browse_header,"Div","sidebar-subhead","cuisine","Cuisine");
-    this.build.bindEventListener("cuisine","update_browse","click");
-    this.build.makeElement(browse_header,"Div","sidebar-subhead","language","Language");
-    this.build.bindEventListener("language","update_browse","click");
-    this.build.makeElement(browse_header,"Div","sidebar-subhead","name","More");
-    this.build.bindEventListener("language","update_browse","click");
-    
-    this.build.makeElement(sidebar_container,"Div","sidebar-header hover","name","Collections");
-    this.build.makeElement(sidebar_container,"Div","sidebar-collections-container","");
-   
-    var collections_container = this.build.makeElement(sidebar_container,"Div","collections-container inline-wrap");
-    var collections = this.acuator_data.collections;
-    for(var i=0;i<collections.length;i++){
-        var obj = collections[i];
-        var id = "collection-" + obj.field + "_" + obj.tag
-        var collection = this.build.makeElement(collections_container, "Div", "collection-item", id, obj.display);
-        this.build.bindEventListener(id,"run_search","click");
-        
-    }
-    
-    this.build.makeElement(sidebar_container,"Div","ad ad-sidebar","ad-sidebar");
-}
-
 Actuator.prototype.recentBar = function(data){
     //needs to be refocused to something else
     //console.log(data);
@@ -260,23 +176,6 @@ Actuator.prototype.updateData = function(newData){
 
 Actuator.prototype.updateResults = function(container_id,new_results){
     
-}
-
-Actuator.prototype.toggleHeader = function(page){
-    //console.log("toggling header!");
-    var logo_style = this.logo.className;
-    if(page != "clean_search"){
-        this.logo.className = "logo-side";
-        this.toggleButtons.className = "toggle-buttons-side inline";
-        this.cImg.className = "logo-item logo-item-side fade-out";
-        this.bwImg.className = "logo-item logo-item-side";
-    } else {
-        this.logo.className = "logo-center";
-        this.toggleButtons.className = "toggle-buttons-full invisible";
-        this.cImg.className = "logo-item fade-out";
-        this.bwImg.className = "logo-item";
-       
-    }
 }
 
 Actuator.prototype.on = function (event, callback) {
