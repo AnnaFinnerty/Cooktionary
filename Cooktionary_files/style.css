@@ -25,7 +25,7 @@ span{
 .header{
     width: 100vw;
     height: 14vh;
-    
+    padding-top: 2vh;
     align-content: center;
     vertical-align: baseline;
     border-bottom: 2px solid gray;
@@ -41,7 +41,6 @@ span{
 }
 
 .logo-side{
-    padding-top: 2vh;
     font-family: 'KoHo', sans-serif;
     margin-top: 2vh;
     margin-left: 2vw;
@@ -62,6 +61,8 @@ span{
 }
 
 .logo-item{
+    width: 10vw;
+    height: 7vh;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: bottom;
@@ -69,10 +70,6 @@ span{
     left: 0;
 }
 
-.logo-item-side{
-    max-width: 3vw;
-    max-height: 5vh;
-}
 .toggle-buttons-full{
     width: 10vw;
     height: 10vh;
@@ -81,33 +78,14 @@ span{
 .toggle-buttons-side{
     width: 50vw;
     height: 10vh;
-    padding-top: 8vh;
-    margin-left: 20vw;
-}
-
-.sidebar-random-button{
-    border: 1px solid dimgray;
-    height: 4.5vh;
-    line-height: 4.5vh;
-    text-align: center;
-    width: 4.5vw;
-    background: rgb(230,230,230);
-    box-shadow: inset 0px 0px 1px 1px rgba(0,0,0,.1);
-    border-radius: 50%;
-}
-
-.sidebar-random-button:hover{
-    box-shadow: inset 0px 0px 1px 1px rgba(0,0,0,.3);
-}
-
-.random-icon{
-    font-size: 3vh;
+    padding-top: 5vh;
+    margin-left: 15vw;
 }
 
 .menu-button{
     position: fixed;
-    margin-left: 10vw;
-    padding-top: 8vh;
+    margin-left: 5vw;
+    padding-top: 5vh;
     z-index: 100;
 }
 
@@ -175,10 +153,26 @@ span{
     box-shadow: inset 0px 0px 1px 1px rgba(0,0,0,.3);
 }
 
+.sidebar-random-button{
+    border: 1px solid dimgray;
+    height: 4.5vw;
+    font-size: 3vh;
+    line-height: 4.5vw;
+    text-align: center;
+    width: 5vw;
+    background: rgb(230,230,230);
+    box-shadow: inset 0px 0px 1px 1px rgba(0,0,0,.1);
+    border-radius: 2vw;
+}
+
+.sidebar-random-button:hover{
+    background: lightblue;
+    box-shadow: inset 0px 0px 1px 1px rgba(0,0,0,.3);
+}
+
 .collections-container{
     border: 2px solid dimgray;
     background: white;
-    width: 10vw;
     margin: .5vw;
     padding: .1vw;
     height: 20vh;
@@ -252,7 +246,7 @@ span{
 }
 
 .sidebar-search{
-     width: 20vw;
+     width: 15vw;
      height: 3.5vw;
      font-size: 3vh;
      line-height: 3.5vh;
@@ -371,16 +365,22 @@ span{
 }
 
 .result-header-full{
-    width: 70vw;
     font-weight: 600;
     font-size: 5vh;
     margin: 1vh;
 }
 
 .result-header-full-mobile{
-    width: 70vw;
     font-size: 4vh;
     margin: 1vh;
+}
+
+.back-button{
+    transform: translate(50vw,-2vh);
+}
+
+.back-button-mobile{
+    transform: translate(30vw,-1vh);
 }
 
 .result-item-full{

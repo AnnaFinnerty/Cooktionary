@@ -27,7 +27,6 @@ App.prototype.awake = function(){
     this.actuator.on("change_page",this.changePage.bind(this));
     this.actuator.on("update_text",this.updateSearchText.bind(this));
     this.actuator.on("update_search",this.updateSearchParameter.bind(this));
-    this.actuator.on("search_by",this.updateTextSearchCategory.bind(this));
     this.actuator.on("run_search",this.runSearch.bind(this));
     this.actuator.on("update_browse",this.updateBrowse.bind(this));
     this.actuator.on("show_random",this.showRandom.bind(this));
@@ -64,7 +63,6 @@ App.prototype.generateAcuatorData = function(){
 }
 
 App.prototype.actuate = function(page,data){
-    this.actuator.updateData(this.acuator_data);
     this.actuator.actuate(page,data,this.acuator_data);
     this.updateHistory(page,data);
 }
@@ -179,24 +177,20 @@ App.prototype.updateBrowse = function(newSetting){
     this.changePage("browse",data);
 }
 
-App.prototype.updateTextSearchCategory = function(newCategory){
-    this.searchManager.updateTextSearchCategory(newCategory);
-}
-
 App.prototype.updateSearchParameter = function(searchData){
     console.log("updating search!");
     console.log(searchData);
+    var split = searchData.split("_");
+    var criteria = split[0];
+    var newData = "";
+    for(var i = 1; i<split.length;i++){
+        newData = i==1 ? newData + split[i] : newData + "_" + split[i];
+    }
     if(searchData == "search_advanced"){
         this.changePage("advanced",this.searchManager.searchCriteria);
     } else if (searchData == "show_random") {
         this.showRandom();
     } else {
-        var split = searchData.split("_");
-        var criteria = split[0];
-        var newData = "";
-        for(var i = 1; i<split.length;i++){
-            newData = i==1 ? newData + split[i] : newData + "_" + split[i];
-        }
         this.searchManager.updateSearchCriteria(criteria,newData);
     }
 }

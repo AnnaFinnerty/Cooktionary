@@ -1,5 +1,5 @@
 function SearchManager(updateAcuatorCallback){
-    //console.log("Search Manager running!");
+    console.log("Search Manager running!");
     this.updateActuatorCallback = updateAcuatorCallback;
     
     this.searchBy = "search_by_name";
@@ -25,7 +25,7 @@ function SearchManager(updateAcuatorCallback){
     }
     this.data = fakeData;
     this.blog = fakeBlog;
-    
+    console.log(fakeData);
     this.awake();
 }
 
@@ -61,13 +61,14 @@ SearchManager.prototype.awake = function(){
             }
         }
     }
-    //console.log(searchData);
+    console.log(searchData);
     this.searchData = searchData;
 }
 
 SearchManager.prototype.showRandom = function(){
     var data = this.data;
     var keys = Object.keys(data);
+    console.log(keys);
     var r = Math.floor(Math.random()*keys.length);
     return this.data[keys[r]];
 }
@@ -93,7 +94,7 @@ SearchManager.prototype.fakeBrowse = function(category){
                 }
             }
         }
-        //console.log(langs);
+        console.log(langs);
         for(var r in langs){
             var obj = {};
             obj[r] = langs[r];
@@ -103,7 +104,7 @@ SearchManager.prototype.fakeBrowse = function(category){
         var cuisines = {};
         for(var i in this.data){
             for(var c in this.data[i]['cuisine']){
-                //console.log(c);
+                console.log(c);
                 if(!cuisines[c]){
                     cuisines[c] = [];
                 }
@@ -181,12 +182,12 @@ SearchManager.prototype.fakeTextSearch = function(searchTerm){
 }
 
 SearchManager.prototype.fakeQuickSearch = function(field,request){
-    //console.log("quick search!");
+    console.log("quick search!");
     var data = this.data;
     var results = [];
     for(var x in data){
-        //console.log(x);
-        //console.log(data[x][field]);
+        console.log(x);
+        console.log(data[x][field]);
         var active_field = data[x][field];
         for(var y = 0; y < active_field.length;y++){
             var item = active_field[y];
@@ -219,7 +220,6 @@ SearchManager.prototype.failSafeFakeSearch = function(searchTerm){
 
 SearchManager.prototype.sanitizeText = function(){
     var text = this.searchText;
-    //STRIP TEXT + ADD SECURITY MEASURES HERE
     
     return text;
 }
@@ -230,13 +230,7 @@ SearchManager.prototype.updateSearchText = function(searchText){
     console.log(this.searchCriteria.text);
 }
 
-SearchManager.prototype.updateTextSearchCategory = function(category){
-    console.log("Updating text search category!");
-    this.searchBy = category;
-}
-
 SearchManager.prototype.updateSearchCriteria = function(critera,newData){
-    console.log("Updating search criteria!");
     console.log(critera);
     console.log(newData);
     this.searchCriteria[critera].push(newData);
