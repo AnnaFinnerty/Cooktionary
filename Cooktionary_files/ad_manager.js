@@ -1,7 +1,6 @@
 function AdManager(){
-    //console.log("Ad Manager running!");
+    console.log("Ad Manager running!");
     this.active_ads = [];
-    this.incentives = fakeData;
 }
 
 AdManager.prototype.registerAd = function(newAd){

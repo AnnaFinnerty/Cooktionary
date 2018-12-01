@@ -19,7 +19,7 @@ InputManager.prototype.listen = function(){
     
     var self = this; 
     
-    //console.log("Listening");
+    console.log("Listening");
     var map = {
     13: "enter",    
   };

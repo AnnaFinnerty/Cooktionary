@@ -1,5 +1,5 @@
 function Build(callback, isMobile){
-    //console.log("Build helper running!");
+    console.log("Build helper running!");
     this.callback = callback;
     this.language = "english";
     this.mobile = isMobile;
@@ -35,16 +35,12 @@ Build.prototype.buildResult = function(container, result, style){
 
 Build.prototype.makeBrowseResult = function(container,result,style,name){
     var result_container = this.makeElement(container,"Div","result-item-"+ style + " block",result.id,"");
-    
     var row1 = this.makeElement(result_container,"Div","block");
     var result_label = this.makeElement(row1,"h1","result-label-" + style,name + "-label",name);
-    
     var row2 = this.makeElement(result_container,"Div","inline");
     var result_image = this.makeImg(row2,result.id,result.id,"result-image-"+ style);
     this.bindEventListener(result.id,"show_full","click");
-    
     var column2 = this.makeElement(row2,"Div","block");
-    
     var counter = 0;
         for(var names_subhead in result.name){
             if(names_subhead != "scientific"){
@@ -58,7 +54,6 @@ Build.prototype.makeBrowseResult = function(container,result,style,name){
                 }
             } 
     }
-    
     var see_more = this.makeElement(column2,"Div","more"+style, result.id,"<span class='glyphicons glyphicons-more icon'></span>");
 }
 
@@ -71,23 +66,19 @@ Build.prototype.makeExpandedResult = function(container,result,style,name){
     var result_image = this.makeImg(result_container,result.id,result.id,"result-image-"+ style);
     var result_label = this.makeElement(result_container,"h1","result-label-" + style,name + "-label",name);
     this.bindEventListener(result.id,"show_full","click");
-    
-    var column2 = this.makeElement(result_container,"Div","block");
-    
+    var row2 = this.makeElement(result_container,"Div","block");
     for(var names_subhead in result.name){
             if(names_subhead != "scientific"){
                 var names = result['name'][names_subhead];
                 for(var n = 0 ; n < names.length; n++){
                     var name = this.capitalize(names[n]);
-                    var name_label = this.makeElement(column2,"Div","result-label-" + style + " inline-flex","",name);
+                    var name_label = this.makeElement(row2,"Div","result-label-" + style + " inline-flex","",name);
                 }
             } 
         }
-    
-    var column3 = this.makeElement(result_container,"Div","block");
-    this.makeAd(column3,"ad-"+style,)
-    
-    var see_more = this.makeElement(column3,"Div","more"+style, result.id,"<span class='glyphicons glyphicons-more icon'></span>");
+    var row3 = this.makeElement(result_container,"Div","block");
+    this.makeAd(row3,"ad-"+style,)
+    var see_more = this.makeElement(row3,"Div","more"+style, result.id,"<span class='glyphicons glyphicons-more icon'></span>");
 }
 
 Build.prototype.makeFullResult = function(container,result,style,name){
@@ -127,7 +118,7 @@ Build.prototype.makeFullResult = function(container,result,style,name){
     
         var result_form = this.makeElement(row2,"Div","result-header-" + style,"","Forms:");
         this.makeMistakeReporter(result_form,"full",result.id);
-        this.appendList(row2,result['form'],"list-item-" + style,"form","click","run_search");
+        this.appendList(row2,result['form'],"list-item-" + style,"");
         
         var cuisines_head = this.makeElement(row2,"Div","result-header-"+ style,"","Cuisines:");
         for(var cuisine_subhead in result.cuisine){
@@ -139,12 +130,12 @@ Build.prototype.makeFullResult = function(container,result,style,name){
     
         if(result['similiar'].length){
             var result_similar = this.makeElement(row2,"Div","result-label-" + style + " inline-wrap","","Similar to:");
-            this.appendList(result_similar,result['similiar'],"list-item-" + style,"","click","show_full");
+            this.appendList(result_similar,result['similiar'],"list-item-" + style,"similiar","click","show_full");
         }
         
         if(result['mistaken'].length){
             var result_mistaken = this.makeElement(row2,"Div","result-label-" + style,"","Mistaken for:");
-            this.appendList(result_mistaken,result['mistaken'],"list-item-" + style,"","click","show_full");
+            this.appendList(result_mistaken,result['mistaken'],"list-item-" + style,"mistaken","click","show_full");
         }
         
     
@@ -217,13 +208,12 @@ Build.prototype.appendList = function(container,array,style,id,event,action){
     //console.log(array);
     for(var i=0;i<array.length;i++){
         var item = array[i];
-        var new_id = id == "" ? this.returnID(item) : id + "_" + this.returnID(item);
+        var id = id == "" ? this.returnID(item):id + "_" + this.returnID(item);
         var name = this.returnName(item);
-        //console.log(name);
-        //console.log(new_id);
-        this.makeElement(container,"Span",style,new_id,name);
+        //console.log(id);
+        this.makeElement(container,"Span",style,id,name);
         if(event){
-            this.bindEventListener(new_id,action,event);
+            this.bindEventListener(id,action,event);
         }
     }
 }

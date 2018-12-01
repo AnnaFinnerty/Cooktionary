@@ -1,1 +1,14 @@
-!Hover on glyphic elements
+
++seperate actuator data into constants (menu building info) and updatable data
++add setting (language)
++save settings, last view ingredients in local storage
++error handling if blank text is submitted
++add error handling in result building
++better styling on expanded elements
++history setter not working perfectly
+
+
+!blog
+!admin mode
+
+-Hover on glyphic elements
