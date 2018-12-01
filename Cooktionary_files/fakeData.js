@@ -17,7 +17,7 @@ var fakeData = {
             }
         },
         similiar: ["cumin"],
-        mistaken: ["aniseed","star_anise"],
+        mistaken: ["anise","star_anise"],
     },
     tomato: {
         id: "tomato",
@@ -39,15 +39,15 @@ var fakeData = {
         similiar: [],
         mistaken: [],
     },
-    aniseed: {
-        id: "aniseed",
+    anise: {
+        id: "anise",
         color: "darkgreen",
         classification: ["spice"],
         description: "test",
         form:["whole","ground"],
         name: {
             scientific: "",
-            english: ["aniseed","anise"],
+            english: ["anise","aniseed"],
         },
         cuisine:{
             italian: {
@@ -55,7 +55,7 @@ var fakeData = {
                 other:["five_spice_powder"]
             }
         },
-        similiar: ["fennel_seed"],
+        similiar: ["fennel_seed","anise"],
         mistaken: ["star_anise","fennel_seed"],
     },
     star_anise: {
@@ -76,7 +76,7 @@ var fakeData = {
             }
         },
         similiar: ["fennel_seed","aniseed"],
-        mistaken: ["aniseed","fennel"],
+        mistaken: ["anise","fennel"],
     },
     cinnamon: {
         id: "cinnamon",
@@ -116,7 +116,7 @@ var fakeData = {
             }
         },
         similiar: ["cumin"],
-        mistaken: ["aniseed","star_anise"],
+        mistaken: ["anise","star_anise"],
     },
     
 }

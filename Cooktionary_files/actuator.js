@@ -1,5 +1,5 @@
 function Actuator(data){
-    //console.log("Actuator running!");
+    console.log("Actuator running!");
     
     this.build = new Build(this.emit.bind(this),data.isMobile);
     
@@ -9,33 +9,25 @@ function Actuator(data){
     
     this.acuator_data = data;
     
-    this.current_page;
-    this.current_data;
-    
     this.events = {};
     this.awake();
 }
 
 Actuator.prototype.awake = function(){
-    
-    // Build the header
     var header = document.querySelector(".header");
-    this.logo = document.querySelector("#logo-clean_search");
-    this.build.bindEventListener("logo-clean_search","change_page","click");
+    this.logo = document.querySelector("#logo");
     
     this.toggleButtons = document.querySelector(".toggle-buttons");
-    
-    this.build.makeSearchBar(this.toggleButtons,"sidebar-search");
-    var random_button = this.build.makeElement(this.toggleButtons,"Button","sidebar-random-button","sidebar-show_random","<span class='glyphicons glyphicons-rabbit icon random-icon'></span>");
+    var random_button = this.build.makeElement(this.toggleButtons,"Button","sidebar-random-button","sidebar-show_random","<span class='glyphicons glyphicons-rabbit icon'></span>");
     this.build.bindEventListener("sidebar-show_random","update_search","click");
     
-    
+    this.build.makeSearchBar(this.toggleButtons,"sidebar-search");
     
     //this.build.makeElement(this.toggleButtons,"Button","sidebar-button","sidebar-search_advanced","ADVANCED");
     //this.build.bindEventListener("sidebar-search_advanced","update_search","click");
     
     
-    
+    this.build.bindEventListener("logo","change_page","click");
     var icon_container = document.querySelector(".icon-container");
     var icons = [{id:"fennel_bulb",width:"5vw",height:"10vh"},
                   {id:"tomato",width:"6vw",height:"5vw"},
@@ -53,8 +45,6 @@ Actuator.prototype.awake = function(){
     var cImg = this.build.makeImg(bwImg,"logos/"+icon.id+"-color",id,"logo-item fade-out");
         cImg.style.width = icon.width;
         cImg.style.height = icon.height;
-    
-    
     var added = document.querySelector("#"+id+"");
     added.addEventListener("mouseover",function(){
             this.className = "logo-item fade-in";
@@ -63,9 +53,6 @@ Actuator.prototype.awake = function(){
             this.className = "logo-item fade-out";
         })
 
-    this.bwImg = bwImg;
-    this.cImg = cImg;
-    
     this.build.bindEventListener(id,"show_full","click");
     
     var header_dropdown_options = [{display: "search",id:"clean_search"}, 
@@ -137,7 +124,7 @@ Actuator.prototype.showFull = function(request){
 Actuator.prototype.showCleanSearch = function(searchOptions){
     var container = this.build.makeElement(this.content,"Div","big-search-container");
     var searchbar = this.build.makeSearchBar(container,"big-search");
-    this.build.buildMenu(container,this.acuator_data.searchingBy,this.acuator_data.searchByOptions,"search-options","search_by","options");
+    this.build.buildMenu(container,this.acuator_data.searchingBy,this.acuator_data.searchByOptions,"search-options","update_search","options");
     this.recentBar(this.acuator_data.incentives);
 }
 
@@ -181,7 +168,8 @@ Actuator.prototype.showBrowse = function(dataObj){
                             {display: "cuisine",id:"cuisine"},
                             {display: "language",id:"language"}
                             ];
-    this.build.buildMenu(browse_header,"browse-menu", dropdown_options, "visible", "update_browse", this.acuator_data.browsingBy);
+    this.build.buildMenu(browse_header,"browse-menu",dropdown_options,"visible","update_browse","name");
+    
     
     var content = this.build.makeElement(container,"Div","browse-content");
     if(type == "name"){
@@ -241,7 +229,7 @@ Actuator.prototype.showSidebar = function(){
 
 Actuator.prototype.recentBar = function(data){
     //needs to be refocused to something else
-    //console.log(data);
+    console.log(data);
     var recent_container = this.build.makeElement(this.content,"Div","recent-container inline");
     var recent_content = this.build.makeElement(recent_container,"Div","recent-content inline");
     for(var recent in data){
@@ -253,7 +241,6 @@ Actuator.prototype.recentBar = function(data){
 }
 
 Actuator.prototype.updateData = function(newData){
-    console.log("new data!");
     console.log(newData);
     this.acuator_data = newData;
 }
@@ -263,20 +250,24 @@ Actuator.prototype.updateResults = function(container_id,new_results){
 }
 
 Actuator.prototype.toggleHeader = function(page){
-    //console.log("toggling header!");
+    console.log("toggling header!");
     var logo_style = this.logo.className;
     if(page != "clean_search"){
         this.logo.className = "logo-side";
         this.toggleButtons.className = "toggle-buttons-side inline";
-        this.cImg.className = "logo-item logo-item-side fade-out";
-        this.bwImg.className = "logo-item logo-item-side";
     } else {
         this.logo.className = "logo-center";
         this.toggleButtons.className = "toggle-buttons-full invisible";
-        this.cImg.className = "logo-item fade-out";
-        this.bwImg.className = "logo-item";
-       
     }
+}
+
+Actuator.prototype.buildFullHeader = function(){
+    var container = this.toggleButtons;
+    var random_button = this.build.makeElement(container,"Button","sidebar-random-button","sidebar-show_random","RANDOM");
+    this.build.bindEventListener("sidebar-show_random","update_search","click");
+    this.build.makeSearchBar(container,"sidebar-search");
+    this.build.makeElement(container,"Button","sidebar-button","sidebar-search_advanced","ADVANCED")
+    this.build.bindEventListener("sidebar-search_advanced","update_search","click");
 }
 
 Actuator.prototype.on = function (event, callback) {
