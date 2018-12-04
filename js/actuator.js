@@ -4,12 +4,12 @@ function Actuator(data){
     this.build = new Build(this.emit.bind(this),data.isMobile);
     
     this.content = document.querySelector('.content');
-    this.showing = "big-search";
+    //this.showing = "big-search";
     this.result_type = "expanded";
     
     this.acuator_data = data;
     
-    this.header = new Header(this.build);
+    this.header = new Header(this.build,this.acuator_data.isMobile);
     this.sidebar = new Sidebar(this.build, this.acuator_data.collections);
     
     
@@ -58,7 +58,14 @@ Actuator.prototype.actuate = function(page,data,actuator_data){
             this.showCleanSearch(data);
             break;
     }
-    this.showing = page;
+    this.current_page = page;
+    this.current_id = data;
+}
+
+Actuator.prototype.reloadPage = function(data,a_data){
+    var current_data = data ? data : this.current_data;
+    var acuator_data = a_data ? a_data : this.acuator_data;
+    this.actuate(this.current_page,current_data,acuator_data);
 }
 
 Actuator.prototype.showSearchResults = function(results){
@@ -90,7 +97,7 @@ Actuator.prototype.showAdvancedSearch = function(){
     console.log("Showing Advanced Search");
     var search_criteria = this.acuator_data.searchCriteria;
     var search_data = this.acuator_data.searchData;
-    var controls_container = this.build.makeElement(this.content,"Div","advanced-search-container inline-wrap");
+    var controls_container = this.build.makeElement(this.content,"Div","advanced-search-container");
     for(var criterium in search_data){
         if(criterium != "text"){
             var label = this.build.makeElement(controls_container,"Div","search-criteria-label","",criterium);

@@ -1,5 +1,6 @@
 function Icon(build){
     this.build = build;
+    this.cClass = "logo-item fade-out";
     
     this.icon_container = document.querySelector(".icon-container");
     this.icons = [{id:"fennel_bulb",width:"5vw",height:"10vh"},
@@ -20,13 +21,13 @@ Icon.prototype.buildIcon = function(icon){
         cImg.style.width = icon.width;
         cImg.style.height = icon.height;
     
-    
+    var self = this;
     var added = document.querySelector("#"+id+"");
     added.addEventListener("mouseover",function(){
-            this.className = "logo-item fade-in";
+            this.className = self.cClass + " fade-in";
         })
     added.addEventListener("mouseout",function(){
-            this.className = "logo-item fade-out";
+            this.className = self.cClass + " logo-item fade-out";
         })
 
     this.bwImg = bwImg;
@@ -43,9 +44,11 @@ Icon.prototype.randomStartIcon = function(){
 Icon.prototype.expandIcon = function(){
     this.cImg.className = "logo-item fade-out";
     this.bwImg.className = "logo-item";
+    this.cClass = "logo-item";
 }
 
 Icon.prototype.shrinkIcon = function(){
     this.cImg.className = "logo-item logo-item-side fade-out";
     this.bwImg.className = "logo-item logo-item-side";
+    this.cClass = "logo-item logo-item-side";
 }

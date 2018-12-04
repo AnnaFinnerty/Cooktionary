@@ -43,7 +43,7 @@ var fakeData = {
         id: "aniseed",
         color: "darkgreen",
         classification: ["spice"],
-        description: "test",
+        description: "A flowering plant in the family Apiaceae native to the eastern Mediterranean region and Southwest Asia",
         form:["whole","ground"],
         name: {
             scientific: "",
@@ -82,11 +82,11 @@ var fakeData = {
         id: "cinnamon",
         color: "brown",
         classification: ["spice"],
-        description: "test",
+        description: "A spice obtained from the inner bark of several tree species from the genus Cinnamomum. Cinnamon is used mainly as an aromatic condiment and flavouring additive in a wide variety of cuisines, sweet and savoury dishes, breakfast cereals, snackfoods, tea and traditional foods.",
         form:["whole","ground"],
         name: {
-            scientific: "",
-            english: ["cinnamon"],
+            scientific: "Cinnamomum verum",
+            english: ["cinnamon","cassia"],
             spanish: ["canela"]
         },
         cuisine:{

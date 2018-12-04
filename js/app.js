@@ -37,7 +37,7 @@ App.prototype.awake = function(){
     
     this.inputManager.on("enter",this.runSearch.bind(this));
     
-    this.loadScreen();
+    this.changePage("clean_search");
 }
 
 App.prototype.resizeWindow = function(){
@@ -125,12 +125,18 @@ App.prototype.changePage = function(page,data){
     console.log(page);
     if(page === "clean_search"){
         this.actuate("clean_search",[this.searchManager.searchBy, this.searchManager.searchByOptions,this.storageManager.incentives]);
-        //this.loadScreen();
     } else {
         this.actuate(page,data);
     }  
 }
 
+App.prototype.reload = function(data){
+    console.log("reload");
+    var a_data = this.generateAcuatorData();
+    this.actuator.reloadPage(data, a_data);
+}
+
+/*
 App.prototype.loadScreen = function(){
     var data = {
         searchBy: this.searchManager.searchBy,
@@ -139,7 +145,7 @@ App.prototype.loadScreen = function(){
     }
     this.actuate("clean_search",[this.searchManager.searchBy, this.searchManager.searchByOptions,this.storageManager.incentives]);
 }
-
+*/
 
 App.prototype.runSearch = function(request){
     console.log("running search!");
@@ -183,6 +189,10 @@ App.prototype.updateTextSearchCategory = function(newCategory){
     this.searchManager.updateTextSearchCategory(newCategory);
 }
 
+App.prototype.searchAdvanced = function(){
+    
+}
+
 App.prototype.updateSearchParameter = function(searchData){
     console.log("updating search!");
     console.log(searchData);
@@ -198,6 +208,7 @@ App.prototype.updateSearchParameter = function(searchData){
             newData = i==1 ? newData + split[i] : newData + "_" + split[i];
         }
         this.searchManager.updateSearchCriteria(criteria,newData);
+        this.reload();
     }
 }
 

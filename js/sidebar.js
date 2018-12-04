@@ -21,7 +21,7 @@ Sidebar.prototype.awake = function(){
     this.build.makeElement(browse_header,"Div","sidebar-subhead","name","More");
     this.build.bindEventListener("language","update_browse","click");
     
-    this.build.makeElement(sidebar_container,"Div","sidebar-header hover","name","Collections");
+    this.build.makeElement(sidebar_container,"Div","sidebar-header","","Collections");
     this.build.makeElement(sidebar_container,"Div","sidebar-collections-container","");
    
     var collections_container = this.build.makeElement(sidebar_container,"Div","collections-container inline-wrap");
@@ -36,7 +36,6 @@ Sidebar.prototype.awake = function(){
     
     this.build.makeElement(sidebar_container,"Div","ad ad-sidebar","ad-sidebar");
     this.sidebarContainer = sidebar_container;
-    console.log(this.sidebarContainer);
 }
 
 Sidebar.prototype.showSidebar = function(){
