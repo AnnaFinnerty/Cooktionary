@@ -18,10 +18,16 @@ App.prototype.awake = function(){
     this.adManager = new AdManager();
     this.searchManager = new SearchManager(this.updateAcuator.bind(this));
     
-    var isMobile = this.detectMobile();
     this.generateAcuatorData();
+    console.log(this.acuator_data);
+    var menu_options = {
+        collections: this.searchManager.collections,
+        searchByOptions: this.searchManager.searchByOptions,
+        browseCategories: this.searchManager.browseCategories,
+        searchData: this.searchManager.searchData,
+    }
     
-    this.actuator = new Actuator(this.acuator_data);
+    this.actuator = new Actuator(this.acuator_data, menu_options);
     this.inputManager = new InputManager();
     
     this.actuator.on("change_page",this.changePage.bind(this));
@@ -58,7 +64,7 @@ App.prototype.generateAcuatorData = function(){
         browsingBy: this.searchManager.browsingBy,
         searchCriteria: this.searchManager.searchCriteria,
         searchData: this.searchManager.searchData,/*STATIC -- REMOVE*/
-        incentives: this.storageManager.incentives,/*STATIC -- REMOVE*/
+        incentives: this.storageManager.incentives,
         recent: this.searchManager.recent
     }
 }

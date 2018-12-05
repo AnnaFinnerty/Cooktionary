@@ -1,16 +1,19 @@
-function Actuator(data){
+function Actuator(data,menuOptions){
     //console.log("Actuator running!");
     
-    this.build = new Build(this.emit.bind(this),data.isMobile);
+    this.build = new Build(this.emit.bind(this),this.registerMenu.bind(this),data.isMobile, menuOptions);
+    this.menuOptions = menuOptions;
+    this.menus = {};
     
     this.content = document.querySelector('.content');
     //this.showing = "big-search";
     this.result_type = "expanded";
     
     this.acuator_data = data;
+    this.isMobile = data.isMobile;
     
-    this.header = new Header(this.build,this.acuator_data.isMobile);
-    this.sidebar = new Sidebar(this.build, this.acuator_data.collections);
+    this.header = new Header(this.build,this.isMobile);
+    this.sidebar = new Sidebar(this.build, this.menuOptions.collections);
     
     
     this.current_page;
@@ -25,31 +28,44 @@ Actuator.prototype.actuate = function(page,data,actuator_data){
     console.log(data);
     
     //check to see if logo needs to be adjusted
-    this.header.toggleHeader(page);
+    
+    if(!this.isMobile){
+          this.header.toggleHeader(page); 
+    }
     
     switch(page){
         case "results":
-            this.sidebar.showSidebar();
+            if(!this.isMobile){
+               this.sidebar.showSidebar(); 
+            }
             this.showSearchResults(data);
             break;
          
         case "full": 
-            this.sidebar.showSidebar();
+            if(!this.isMobile){
+               this.sidebar.showSidebar(); 
+            }
             this.showFull(data);
             break
             
         case "browse": 
-            this.sidebar.showSidebar();
+            if(!this.isMobile){
+               this.sidebar.showSidebar(); 
+            }
             this.showBrowse(data);
             break
             
         case "advanced": 
-            this.sidebar.showSidebar();
+            if(!this.isMobile){
+               this.sidebar.showSidebar(); 
+            }
             this.showAdvancedSearch(data);
             break
             
         case "blog":
-            this.sidebar.showSidebar();
+            if(!this.isMobile){
+               this.sidebar.showSidebar(); 
+            }
             this.showBlog(data);
             break;
             
@@ -89,14 +105,13 @@ Actuator.prototype.showFull = function(request){
 Actuator.prototype.showCleanSearch = function(searchOptions){
     var container = this.build.makeElement(this.content,"Div","big-search-container");
     var searchbar = this.build.makeSearchBar(container,"big-search");
-    this.build.buildMenu(container,this.acuator_data.searchingBy,this.acuator_data.searchByOptions,"search-options","search_by","options");
     this.recentBar(this.acuator_data.incentives);
 }
 
 Actuator.prototype.showAdvancedSearch = function(){
     console.log("Showing Advanced Search");
     var search_criteria = this.acuator_data.searchCriteria;
-    var search_data = this.acuator_data.searchData;
+    var search_data = this.menuOptions.searchData;
     var controls_container = this.build.makeElement(this.content,"Div","advanced-search-container");
     for(var criterium in search_data){
         if(criterium != "text"){
@@ -183,6 +198,14 @@ Actuator.prototype.updateData = function(newData){
 
 Actuator.prototype.updateResults = function(container_id,new_results){
     
+}
+
+Actuator.prototype.registerMenu = function(name,func){
+    console.log("registering menu!");
+    if(!this.menus[name]){
+        this.menus[name] = func;
+    }
+    console.log(this.menus);
 }
 
 Actuator.prototype.on = function (event, callback) {

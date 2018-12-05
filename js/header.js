@@ -1,42 +1,79 @@
 function Header(build,isMobile){
     this.build = build;
     this.isMobile = isMobile;
+    
+    this.header_dropdown_options = [{display: "search",id:"clean_search"}, 
+                                       {display: "browse",id:"browse",action:"update_browse"},
+                                       {display: "blog",id:"blog"}
+                                      ];
+    
     this.buildHeader();
 }
 
 Header.prototype.buildHeader = function(){
     
-    // Build the header
     this.header = document.querySelector(".header");
-    this.logo = document.querySelector("#logo-clean_search");
-    this.build.bindEventListener("logo-clean_search","change_page","click");
-    this.icon = new Icon(this.build);
+    //this.menu_button = document.querySelector(".menu-button");
+    //this.logo = document.querySelector("#logo-clean_search");
     
+    if(this.isMobile){
+        this.buildForMobile();
+    } else {
+        
+        var logo = this.build.makeElement(this.header,"Div","logo-center inline","logo-clean_search","Cooktionary");
+        this.logo = logo;
+        this.build.bindEventListener("logo-clean_search","change_page","click");
+        
+        var icon_container = this.build.makeElement(this.header,"Div","icon-container");
+        this.icon_container = icon_container;
+        this.icon = new Icon(this.build);
+
+
+        //build toggle buttons
+        var toggle_buttons = this.build.makeElement(this.header,"Div","toggle-buttons");
+        this.toggleButtons = toggle_buttons;
+
+            var blog_button = this.build.makeElement(this.toggleButtons,"Button","header-button","header-blog","blog");
+            this.build.bindEventListener("header-blog","change_page","click");
+
+            var advanced_button = this.build.makeElement(this.toggleButtons,"Button","header-button","header-advanced","search");
+            this.build.bindEventListener("header-advanced","change_page","click");
+
+            var random_button = this.build.makeElement(this.toggleButtons,"Button","header-button","header-show_random","<span class='glyphicons glyphicons-rabbit icon random-icon'></span>");
+            this.build.bindEventListener("header-show_random","update_search","click");
+
+            var menu_button = this.build.buildMenu(this.header,"menu-button",this.header_dropdown_options,"menu-button","change_page","<span class='glyphicons glyphicons-menu-hamburger icon'></span>");
+            this.menu_button = document.querySelector(".menu-button");
+
+            this.build.makeSearchBar(this.toggleButtons,"sidebar-search");
+
+    }
     
-    //build toggle buttons
-    this.toggleButtons = document.querySelector(".toggle-buttons");
+}
+
+Header.prototype.buildForMobile = function(){
+        this.header.className = "header-mobile block";
     
-    var blog_button = this.build.makeElement(this.toggleButtons,"Button","header-button","header-blog","blog");
-    this.build.bindEventListener("header-blog","change_page","click");
+        var row1 = this.build.makeElement(this.header,"Div","inline");
     
-    var advanced_button = this.build.makeElement(this.toggleButtons,"Button","header-button","header-advanced","search");
-    this.build.bindEventListener("header-advanced","change_page","click");
+        var logo = this.build.makeElement(row1,"Div","logo-center inline","logo-clean_search","Cooktionary");
+        this.logo = logo;
+        this.build.bindEventListener("logo-clean_search","change_page","click");
     
-    var random_button = this.build.makeElement(this.toggleButtons,"Button","header-button","sidebar-show_random","<span class='glyphicons glyphicons-rabbit icon random-icon'></span>");
-    this.build.bindEventListener("sidebar-show_random","update_search","click");
-     
-    this.build.makeSearchBar(this.toggleButtons,"sidebar-search");
+        var icon_container = this.build.makeElement(row1,"Div","icon-container");
+        this.icon_container = icon_container;
+        this.icon = new Icon(this.build);
+        
+        var row2 = this.build.makeElement(this.header,"Div","inline");
     
+        var browse_button = this.build.makeElement(row2,"Button","header-button","header-browse","browse");
+        this.build.bindEventListener("header-browse","change_page","click");
+        
+        var blog_button = this.build.makeElement(row2,"Button","header-button","header-blog","blog");
+        this.build.bindEventListener("header-blog","change_page","click");
+        
+        var menu_button = this.build.buildMenu(row2,"menu-button",this.header_dropdown_options,"menu-button","change_page","<span class='glyphicons glyphicons-menu-hamburger icon'></span>");
     
-    
-    
-    var header_dropdown_options = [{display: "search",id:"clean_search"}, 
-                                   {display: "browse",id:"browse",action:"update_browse"},
-                                   {display: "blog",id:"blog"}
-                                  ];
-    
-    var menu_button = this.build.buildMenu(this.header,"menu-button",header_dropdown_options,"menu-button","change_page","<span class='glyphicons glyphicons-menu-hamburger icon'></span>");
-    this.menu_button = document.querySelector(".menu-button");
 }
 
 Header.prototype.toggleHeader = function(page){

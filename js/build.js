@@ -1,6 +1,8 @@
-function Build(callback, isMobile){
+function Build(emitCallback, registerMenuCallback, isMobile, menuOptions){
     //console.log("Build helper running!");
-    this.callback = callback;
+    this.callback = emitCallback;
+    this.register = registerMenuCallback;
+    this.menuOptions = menuOptions;
     this.language = "english";
     this.mobile = isMobile;
     console.log("Building for mobile:  " + this.mobile);
@@ -208,16 +210,26 @@ Build.prototype.makeSearchBar = function(container,style){
     if(style == "big-search"){
         var content = this.makeElement(container,"Div","inline-block");
         var searchBar = this.makeElement(content,"Input","search-bar " + style,"search-input");
-        var row2 = this.makeElement(content,"Div","inline");
-        var searchButton = this.makeElement(row2,"Button","search-button big-search-button","search","<span class='glyphicons glyphicons-search seach-button icon'></span>");
+        this.bindEventListener("search-input","update_text","input");
+        var row2 = this.makeElement(content,"Div","inline center");
+        var searchContent = this.mobile ? "<span class='glyphicons glyphicons-search search-icon'></span>" : "search<span class='glyphicons glyphicons-search search-icon'></span>"
+        var searchButton = this.makeElement(row2,"Button","search-button big-search-button","big-search",searchContent);
+        this.bindEventListener("big-search","run_search","click");
+        
+        var options_menu = new Menu(this, this.register.bind(this), searchButton, this.menuOptions.searchByOptions, "dropdown", "change_page","search_options","<span class='glyphicons glyphicons-chevron-down random-icon'></span>");
+        
+        var randomContent = this.mobile ? "<span class='glyphicons glyphicons-rabbit random-icon'></span>" : "random<span class='glyphicons glyphicons-rabbit random-icon'></span>"
+        var randomButton = this.makeElement(row2,"Button","search-button big-search-button","big-show_random",randomContent);
+        this.bindEventListener("big-show_random","update_search","click");
     } else {
         var content = this.makeElement(container,"Div","inline");
-        var searchBar = this.makeElement(content,"Input","search-bar " + style,"search-input");
-        var searchButton = this.makeElement(content,"Button","search-button","search","<span class='glyphicons glyphicons-search seach-button icon'></span>");
-        
+        var searchBar = this.makeElement(content,"Input","search-bar " + style,"small-search-input");
+        this.bindEventListener("small-search-input","update_text","input");
+        var searchButton = this.makeElement(content,"Button","search-button","small-search","<span class='glyphicons glyphicons-search seach-button icon'></span>");
+        this.bindEventListener("small-search","run_search","click");
     }
-    this.bindEventListener("search-input","update_text","input");
-    this.bindEventListener("search","run_search","click");
+    
+    
     
     
     return searchBar;
