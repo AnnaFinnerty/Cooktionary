@@ -27,10 +27,9 @@ function StorageManager(updatePageCallback){
     this.recent = [];
     this.incentives = fakeData;
     this.recent_ingrediants = this.getRecentIngrediants();
-    console.log(this.recent_ingrediants);
+
     this.language = this.getLanguage();
     
-    //console.log(this.language);
     this.listen();
     this.pagecount = 1;
     
@@ -143,9 +142,7 @@ StorageManager.prototype.setLanguage = function (newLanguage) {
 };
 
 StorageManager.prototype.getRecentIngrediants = function(){
-    //console.log("getting recent ingrediants");
     var recent = this.stringToArray(this.storage.getItem("recent"));
-    console.log(recent);
     return recent || [] ;
 }
 

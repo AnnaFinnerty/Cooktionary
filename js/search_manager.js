@@ -6,12 +6,13 @@ function SearchManager(updateAcuatorCallback){
     this.searchText = "";
     this.searchByOptions = [{display: "search by name",id:"search_by_name"}, 
                             {display: "search by cuisine",id:"search_by_cuisine"},
-                            {display: "advanced search",id:"search_advanced"},
-                            {display: "random ingredient",id:"show_random"}
+                            {display: "advanced search",id:"search_advanced",action:"change_page"},
+                            {display: "random ingredient",id:"show_random",action:"show_random"}
                            ];
     this.browseCategories = ["name","language","cuisine","form"];
-    this.collections = [{display:"Chinese dishes",tag: "chinese","field":"cuisine"},
-                         {display:"Spices",tag: "spice","field":"classification"},
+    this.collections = [{display:"Chinese",tag: "chinese","field":"cuisine"},
+                        {display:"Spices",tag: "spice","field":"classification"},
+                        {display:"Vegetables",tag: "vegetable","field":"classification"},
                        ];
     this.browsingBy = "name";
     this.browsePosition = 0;
@@ -188,13 +189,23 @@ SearchManager.prototype.fakeQuickSearch = function(field,request){
         //console.log(x);
         //console.log(data[x][field]);
         var active_field = data[x][field];
-        for(var y = 0; y < active_field.length;y++){
-            var item = active_field[y];
-            var test = item.indexOf(request);
-            if(test != -1){
-                results.push(data[x]);
+        if(field == "cuisine"){
+            for(var cuisine in active_field){
+                console.log(cuisine);
+                var test = cuisine.indexOf(request);
+                if(test != -1){
+                    results.push(data[x]);
+                } 
             }
-        }
+        } else {
+            for(var y = 0; y < active_field.length;y++){
+                var item = active_field[y];
+                var test = item.indexOf(request);
+                if(test != -1){
+                    results.push(data[x]);
+                }
+            }   
+        }  
     }
     return results
 }

@@ -1,4 +1,4 @@
-
++ move incentives to ad manager
 +seperate actuator data into constants (menu building info) and updatable data
 +add setting (language)
 +save settings, last view ingredients in local storage
