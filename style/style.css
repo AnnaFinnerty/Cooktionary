@@ -38,8 +38,9 @@ span{
 }
 
 .header-mobile{
-    height: 10vh;
+    height: 12.5vh;
     border-bottom: 2px solid gray;
+    display: block;
 }
 
 .logo-center{
@@ -56,6 +57,15 @@ span{
     font-family: 'KoHo', sans-serif;
     margin-top: 3.5vh;
     margin-left: 2vw;
+    text-shadow: 1px 1px goldenrod;
+    cursor: pointer;
+    font-size: 5vh;
+}
+
+.logo-mobile{
+    padding-top: 1vh;
+    font-family: 'KoHo', sans-serif;
+    margin-left: 25vw;
     text-shadow: 1px 1px goldenrod;
     cursor: pointer;
     font-size: 5vh;
@@ -120,9 +130,9 @@ span{
 }
 
 .header-button-mobile{
-    font-size: 3.5vh;
+    font-size: 2vh;
     padding: 1vh;
-    width: 5vw;
+    width: 16vw;
     height: 4vh;
 }
 
@@ -130,6 +140,13 @@ span{
     position: fixed;
     margin-left: 10vw;
     padding-top: 8vh;
+    z-index: 100;
+}
+
+.menu-button-mobile{
+    position: fixed;
+    margin-left: 5vw;
+    padding-top: 0vh;
     z-index: 100;
 }
 
@@ -160,6 +177,8 @@ span{
     width: 100vw;
     height: 5vh;
 }
+
+/*SIDEBAR*/
 
 .sidebar-container{
     width: 20vw;
@@ -266,6 +285,19 @@ span{
     margin: 0;
 }
 
+.dropdown-icon{
+    font-size: 1.5vh;
+    padding: 0;
+    margin: 0;
+    margin-top: -1vh;
+    padding-left: -1vh;
+    border-left: 2px solid gray;
+}
+
+.dropdown-icon:hover{
+    background: white;
+}
+
 .header-random-button{
     border: 1px solid dimgray;
     height: 4.5vh;
@@ -285,6 +317,7 @@ span{
     margin: 0;
     padding: 0;
     font-size: 2vh;
+    height: 4.5vh;
 }
 
 .random-icon-mobile{
@@ -340,6 +373,14 @@ span{
      line-height: 3.5vh;
     margin-left: .5vw;
     margin-top: 1vh;
+}
+
+.sidebar-search-mobile{
+     width: 25vw;
+     height: 3.5vh;
+     font-size: 3vh;
+     line-height: 3.5vh;
+    margin-left: 3vw;
 }
 
 .search-options{
@@ -410,6 +451,13 @@ span{
     overflow: scroll;
 }
 
+.results-container-mobile,.full-container-mobile,.browse-container-mobile,.blog-container-mobile{
+    
+    height: 86vh;
+    width: 98vw;
+    padding: 1vw;
+}
+
 /* EXPANDED STYLES*/ 
 
 .result-item-expanded{
@@ -422,6 +470,12 @@ span{
     display: inline-flex;
     flex-direction: row;
     flex-wrap: nowrap;
+}
+
+.result-item-expanded-mobile{
+    width: 92vw;
+    padding: 1vh;
+    margin: 1vh;
 }
 
 .result-item-expanded:hover{
@@ -489,7 +543,7 @@ span{
 }
 
 .result-title-full-mobile{
-    width: 60vw;
+    width: 80vw;
     font-size: 4vh;
     margin: .5vh;
 }
@@ -514,8 +568,17 @@ span{
 
 .result-item-full{
     margin: 1vh;
-    font-size: 150%;
-    
+    font-size: 150%; 
+}
+
+.result-item-full-mobile{
+    width: 98vw;
+    margin: 1vw;
+    font-size: 110%; 
+}
+
+.result-content-full-mobile{
+    width: 70vw;
 }
 
 .result-image-full{
@@ -589,6 +652,10 @@ span{
     font-size: 5vh;
 }
 
+.browse-header-mobile{
+    font-size: 3.5vh;
+}
+
 .browse-subhead{
     color: dimgray;
     font-size: 5vh;
@@ -613,8 +680,8 @@ span{
 }
 
 .result-item-browse-mobile{
-    width: 33vw;
-    height: 33vw;
+    width: 28vw;
+    height: 28vw;
 }
 
 .result-item-browse:hover{
@@ -625,6 +692,11 @@ span{
     font-weight: 800;
     font-size: 3.5vh;
     padding: 1vh;
+}
+
+.result-label-browse-mobile{
+    font-size: 2.3vh;
+    padding: .5vh;
 }
 
 .result-image-browse{
@@ -795,14 +867,22 @@ span{
     justify-content: center;
 }
 
+.center{
+    align-content: center;
+    text-align: center;
+}
+
 .inline{
     display: inline-flex;
     flex-direction: row;
     flex-wrap: nowrap;
 }
 
-.center{
-    align-content: center;
+.inline-flex{
+    width: 100%;
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
 }
 
 .inline-wrap{

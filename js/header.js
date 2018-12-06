@@ -54,9 +54,9 @@ Header.prototype.buildHeader = function(){
 Header.prototype.buildForMobile = function(){
         this.header.className = "header-mobile block";
     
-        var row1 = this.build.makeElement(this.header,"Div","inline");
+        var row1 = this.build.makeElement(this.header,"Div","inline-flex");
     
-        var logo = this.build.makeElement(row1,"Div","logo-center inline","logo-clean_search","Cooktionary");
+        var logo = this.build.makeElement(row1,"Div","logo-mobile","logo-clean_search","Cooktionary");
         this.logo = logo;
         this.build.bindEventListener("logo-clean_search","change_page","click");
     
@@ -64,14 +64,19 @@ Header.prototype.buildForMobile = function(){
         this.icon_container = icon_container;
         this.icon = new Icon(this.build);
         
-        var row2 = this.build.makeElement(this.header,"Div","inline");
+        var row2 = this.build.makeElement(this.header,"Div","inline-flex");
     
-        var browse_button = this.build.makeElement(row2,"Button","header-button","header-browse","browse");
-        this.build.bindEventListener("header-browse","change_page","click");
-        
         var blog_button = this.build.makeElement(row2,"Button","header-button","header-blog","blog");
         this.build.bindEventListener("header-blog","change_page","click");
+    
+        var browse_button = this.build.makeElement(row2,"Button","header-button","header-name","browse");
+        this.build.bindEventListener("header-name","update_browse","click");
         
+        var random_button = this.build.makeElement(row2,"Button","header-button","header-show_random","<span class='glyphicons glyphicons-rabbit icon random-icon'></span>");
+        this.build.bindEventListener("header-show_random","update_search","click");
+        
+        this.build.makeSearchBar(row2,"sidebar-search");
+    
         var menu_button = this.build.buildMenu(row2,"menu-button",this.header_dropdown_options,"menu-button","change_page","<span class='glyphicons glyphicons-menu-hamburger icon'></span>");
     
 }

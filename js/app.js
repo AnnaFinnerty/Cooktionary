@@ -183,7 +183,6 @@ App.prototype.runSearch = function(request){
 
 App.prototype.updateBrowse = function(newSetting){
     console.log("update browse");
-    this.searchManager.updateBrowseSettings(newSetting);
     var data = {
         type: this.searchManager.browsingBy,
         data: this.searchManager.browse()
