@@ -230,8 +230,8 @@ Build.prototype.makeSearchBar = function(container,style){
     } else {
         
         var content = this.makeElement(container,"Div","inline");
-        var searchBar = this.makeElement(content,"Input","search-bar " + style,"small-search");
-        this.bindEventListener("small-search","update_text","input");
+        var searchBar = this.makeElement(content,"Input","search-bar " + style,"small-search-input");
+        this.bindEventListener("small-search-input","update_text","input");
         
         var searchButton = this.makeElement(content,"Button","search-button","small-search","<span class='glyphicons glyphicons-search search-button icon'></span>");
         this.bindEventListener("small-search","run_search","click");
@@ -284,7 +284,7 @@ Build.prototype.bindEventListener = function(el_id,action,event){
     var self = this;
     el.addEventListener(event,function(e){
         //console.log("click!");
-        if(el_id === "search-input"){
+        if(el_id === "search-input" || el_id === "small-search-input"){
             self.callback(action,el.value);
         } else {
             self.callback(action,id);
