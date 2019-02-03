@@ -1,0 +1,25 @@
+{
+  "name": "cooktionary",
+  "version": "1.0.0",
+  "description": "",
+  "main": "fakeData.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AnnaFinnerty/Cooktionary.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AnnaFinnerty/Cooktionary/issues"
+  },
+  "homepage": "https://github.com/AnnaFinnerty/Cooktionary#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "mysql": "^2.16.0",
+    "nodemon": "^1.18.9"
+  }
+}

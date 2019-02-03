@@ -214,7 +214,7 @@ Build.prototype.makeSearchBar = function(container,style){
         var searchBar = this.makeElement(content,"Input","search-bar " + style,"search-input");
         this.bindEventListener("search-input","update_text","input");
         
-        var row2 = this.makeElement(content,"Div","inline center");
+        var row2 = this.makeElement(content,"Div","inline center big-search-buttons");
         
         var searchContainer = this.makeElement(row2,"Div","search-button big-search-button");
         var searchContent = this.mobile ? "<span class='glyphicons glyphicons-search search-icon'></span>" : "search<span class='glyphicons glyphicons-search search-icon'></span>"
@@ -233,7 +233,7 @@ Build.prototype.makeSearchBar = function(container,style){
         var searchBar = this.makeElement(content,"Input","search-bar " + style,"small-search-input");
         this.bindEventListener("small-search-input","update_text","input");
         
-        var searchButton = this.makeElement(content,"Button","search-button","small-search","<span class='glyphicons glyphicons-search search-button icon'></span>");
+        var searchButton = this.makeElement(content,"Button","search-button","small-search","<span class='glyphicons glyphicons-search search-icon icon'></span>");
         this.bindEventListener("small-search","run_search","click");
     
     }

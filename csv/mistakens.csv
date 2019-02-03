@@ -1,0 +1,9 @@
+key_id,lookup_id,mistaken
+1,1,aniseed
+2,1,star_anise
+3,2,star_anise
+4,2,fennel_seed
+5,3,aniseed
+6,3,star_anise
+7,4,aniseed
+8,4,fennel

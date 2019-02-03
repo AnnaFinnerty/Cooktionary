@@ -1,0 +1,7 @@
+key_id,cuisine_lookup_id,classification_lookup_id,name_lookup_id,form_lookup_id,color,mistaken_lookup_id,similar_lookup_id,id,description
+1,1,1,1,1,red,,,tomato,test
+2,2,2,2,2,lightgreen,1,1,fennel_seed,test
+3,3,3,3,3,darkgreen,2,2,aniseed,A flowering plant in the family Apiaceae native to the eastern Mediterranean region and Southwest Asia
+4,4,4,4,4,brown,,3,cinnamon,'A spice obtained from the inner bark of several tree species from the genus Cinnamomum. Cinnamon is used mainly as an aromatic condiment and flavouring additive in a wide variety of cuisines, sweet and savoury dishes, breakfast cereals, snackfoods, tea and traditional foods.'
+5,5,5,5,5,green,3,4,fennel_bulb,test
+6,6,6,6,6,saddlebrown,4,5,star_anise,test

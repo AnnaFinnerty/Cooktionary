@@ -1,0 +1,18 @@
+key_id,lookup_id,language,name
+1,1,french,Tomate
+2,1,english,Tomato
+3,2,spanish,canela
+4,2,english,fennel seed
+5,3,english,aniseed
+6,3,english,anise
+7,4,spanish,canela
+8,4,scientific,Cinnamomum verum
+9,4,english,cinnamon
+10,4,english,cassia
+11,5,spanish,canela
+12,5,english,Fennel Bulb
+13,6,persian,bādiyān
+14,6,persian,بادیان
+15,6,english,star anise
+16,6,english,anise
+17,6,english,Illicium

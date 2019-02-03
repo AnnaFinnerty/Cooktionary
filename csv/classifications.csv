@@ -1,0 +1,8 @@
+key_id,lookup_id,classification
+1,1,vegetable
+2,1,fruit
+3,2,spice
+4,3,spice
+5,4,spice
+6,5,vegetable
+7,6,spice

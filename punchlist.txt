@@ -1,3 +1,4 @@
++ on search empty header searchbar
 + move incentives to ad manager
 +seperate actuator data into constants (menu building info) and updatable data
 +add setting (language)

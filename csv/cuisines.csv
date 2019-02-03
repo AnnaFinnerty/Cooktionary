@@ -1,0 +1,11 @@
+key_id,lookup_id,cuisine,type,dish
+1,1,italian,dishes,pasta_sauce
+2,2,chinese,other,five_spice_powder
+3,2,chinese,dishes,char_siu
+4,3,italian,dishes,biscotti
+5,4,chinese,other,five_spice_powder
+6,4,chinese,dishes,char_siu
+7,5,chinese,other,five_spice_powder
+8,5,chinese,dishes,char_siu
+9,6,chinese,other,five_spice_powder
+10,6,chinese,dishes,char_siu
